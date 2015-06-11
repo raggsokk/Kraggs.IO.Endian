@@ -20,6 +20,9 @@ namespace Kraggs.IO.Endian.Tests
         private byte[] pBuffer;
         const int BUFFERSIZE = 1000;
 
+        private DataConverter Native;
+        private DataConverter Swap;
+
         [SetUp]
         public void Setup()
         {
@@ -29,7 +32,13 @@ namespace Kraggs.IO.Endian.Tests
                 this.pBuffer = new byte[BUFFERSIZE * 8];
                 var r = new Random();
                 r.NextBytes(this.pBuffer);
-            }            
+            }
+
+            if (Native == null)
+                Native = DataConverter.Native;
+            if (Swap == null)
+                Swap = DataConverter.IsLittleEndian ? DataConverter.BigEndian : DataConverter.LittleEndian;
+         
         }
 
         #region Unsigned integer Random bytes tests
@@ -44,7 +53,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetUInt16Copy(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.LittleEndian.GetUInt16(pBuffer, bytePos);
+                test2Buffer[i] = Native.GetUInt16(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -68,7 +77,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetUInt16Swap(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.BigEndian.GetUInt16(pBuffer, bytePos);
+                test2Buffer[i] = Swap.GetUInt16(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -92,7 +101,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetUInt32Copy(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.LittleEndian.GetUInt32(pBuffer, bytePos);
+                test2Buffer[i] = Native.GetUInt32(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -116,7 +125,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetUInt32Swap(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.BigEndian.GetUInt32(pBuffer, bytePos);
+                test2Buffer[i] = Swap.GetUInt32(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -140,7 +149,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetUInt64Copy(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.LittleEndian.GetUInt64(pBuffer, bytePos);
+                test2Buffer[i] = Native.GetUInt64(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -164,7 +173,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetUInt64Swap(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.BigEndian.GetUInt64(pBuffer, bytePos);
+                test2Buffer[i] = Swap.GetUInt64(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -193,7 +202,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetFloatCopy(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.LittleEndian.GetFloat(pBuffer, bytePos);
+                test2Buffer[i] = Native.GetFloat(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -217,7 +226,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetFloatSwap(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.BigEndian.GetFloat(pBuffer, bytePos);
+                test2Buffer[i] = Swap.GetFloat(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -241,7 +250,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetDoubleCopy(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.LittleEndian.GetDouble(pBuffer, bytePos);
+                test2Buffer[i] = Native.GetDouble(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -265,7 +274,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetDoubleSwap(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.BigEndian.GetDouble(pBuffer, bytePos);
+                test2Buffer[i] = Swap.GetDouble(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -293,7 +302,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetInt16Copy(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.LittleEndian.GetInt16(pBuffer, bytePos);
+                test2Buffer[i] = Native.GetInt16(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -317,7 +326,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetInt16Swap(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.BigEndian.GetInt16(pBuffer, bytePos);
+                test2Buffer[i] = Swap.GetInt16(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -341,7 +350,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetInt32Copy(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.LittleEndian.GetInt32(pBuffer, bytePos);
+                test2Buffer[i] = Native.GetInt32(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -365,7 +374,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetInt32Swap(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.BigEndian.GetInt32(pBuffer, bytePos);
+                test2Buffer[i] = Swap.GetInt32(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -389,7 +398,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetInt64Copy(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.LittleEndian.GetInt64(pBuffer, bytePos);
+                test2Buffer[i] = Native.GetInt64(pBuffer, bytePos);
             }
 
             var errorCount = 0;
@@ -413,7 +422,7 @@ namespace Kraggs.IO.Endian.Tests
             for (int i = 0; i < test1Buffer.Length; i++)
             {
                 test1Buffer[i] = ConvertEndian.GetInt64Swap(pBuffer, bytePos);
-                test2Buffer[i] = DataConverter.BigEndian.GetInt64(pBuffer, bytePos);
+                test2Buffer[i] = Swap.GetInt64(pBuffer, bytePos);
             }
 
             var errorCount = 0;

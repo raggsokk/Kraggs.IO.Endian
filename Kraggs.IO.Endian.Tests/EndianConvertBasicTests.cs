@@ -16,6 +16,18 @@ namespace Kraggs.IO.Endian.Tests
     [TestFixture]
     public class EndianConvertBasicTests
     {
+        private DataConverter Native;
+        private DataConverter Swap;
+
+        [SetUp]
+        public void Setup()
+        {
+            if (Native == null)
+                Native = DataConverter.Native;
+            if (Swap == null)
+                Swap = DataConverter.IsLittleEndian ? DataConverter.BigEndian : DataConverter.LittleEndian;
+        }
+
         #region Unsigned Integers
 
         [Test]
@@ -25,21 +37,21 @@ namespace Kraggs.IO.Endian.Tests
             var testValue = BitConverter.GetBytes(16384);
             Assert.AreEqual(
                 ConvertEndian.GetUInt16Copy(testValue, 0),
-                DataConverter.LittleEndian.GetUInt16(testValue, 0),
+                Native.GetUInt16(testValue, 0),
                 "16384 failed."
                 );
 
             var maxValue = BitConverter.GetBytes(UInt16.MaxValue);
             Assert.AreEqual(
                 ConvertEndian.GetUInt16Copy(maxValue, 0),
-                DataConverter.LittleEndian.GetUInt16(maxValue, 0),
+                Native.GetUInt16(maxValue, 0),
                 "UInt16.MaxValue failed."
                 );
 
             var minValue = BitConverter.GetBytes(UInt16.MinValue);
             Assert.AreEqual(
                 ConvertEndian.GetUInt16Copy(minValue, 0),
-                DataConverter.LittleEndian.GetUInt16(minValue, 0),
+                Native.GetUInt16(minValue, 0),
                 "UInt16.MinValue failed."
                 );
         }
@@ -51,21 +63,21 @@ namespace Kraggs.IO.Endian.Tests
             var testValue = BitConverter.GetBytes(16384);
             Assert.AreEqual(
                 ConvertEndian.GetUInt16Swap(testValue, 0),
-                DataConverter.BigEndian.GetUInt16(testValue, 0),
+                Swap.GetUInt16(testValue, 0),
                 "16384 failed."
                 );
 
             var maxValue = BitConverter.GetBytes(UInt16.MaxValue);
             Assert.AreEqual(
                 ConvertEndian.GetUInt16Swap(maxValue, 0),
-                DataConverter.BigEndian.GetUInt16(maxValue, 0),
+                Swap.GetUInt16(maxValue, 0),
                 "UInt16.MaxValue failed."
                 );
 
             var minValue = BitConverter.GetBytes(UInt16.MinValue);
             Assert.AreEqual(
                 ConvertEndian.GetUInt16Swap(minValue, 0),
-                DataConverter.BigEndian.GetUInt16(minValue, 0),
+                Swap.GetUInt16(minValue, 0),
                 "UInt16.MinValue failed."
                 );
         }
@@ -77,21 +89,21 @@ namespace Kraggs.IO.Endian.Tests
             var testValue = BitConverter.GetBytes(0102030405);
             Assert.AreEqual(
                 ConvertEndian.GetUInt32Copy(testValue, 0),
-                DataConverter.LittleEndian.GetUInt32(testValue, 0),
+                Native.GetUInt32(testValue, 0),
                 "0102030405 failed."
                 );
 
             var maxValue = BitConverter.GetBytes(UInt32.MaxValue);
             Assert.AreEqual(
                 ConvertEndian.GetUInt32Copy(maxValue, 0),
-                DataConverter.LittleEndian.GetUInt32(maxValue, 0),
+                Native.GetUInt32(maxValue, 0),
                 "UInt32.MaxValue failed."
                 );
 
             var minValue = BitConverter.GetBytes(UInt32.MinValue);
             Assert.AreEqual(
                 ConvertEndian.GetUInt32Copy(minValue, 0),
-                DataConverter.LittleEndian.GetUInt32(minValue, 0),
+                Native.GetUInt32(minValue, 0),
                 "UInt32.MinValue failed."
                 );
         }
@@ -103,21 +115,21 @@ namespace Kraggs.IO.Endian.Tests
             var testValue = BitConverter.GetBytes(0102030405);
             Assert.AreEqual(
                 ConvertEndian.GetUInt32Swap(testValue, 0),
-                DataConverter.BigEndian.GetUInt32(testValue, 0),
+                Swap.GetUInt32(testValue, 0),
                 "0102030405 failed."
                 );
 
             var maxValue = BitConverter.GetBytes(UInt32.MaxValue);
             Assert.AreEqual(
                 ConvertEndian.GetUInt32Swap(maxValue, 0),
-                DataConverter.BigEndian.GetUInt32(maxValue, 0),
+                Swap.GetUInt32(maxValue, 0),
                 "UInt32.MaxValue failed."
                 );
 
             var minValue = BitConverter.GetBytes(UInt32.MinValue);
             Assert.AreEqual(
                 ConvertEndian.GetUInt32Swap(minValue, 0),
-                DataConverter.BigEndian.GetUInt32(minValue, 0),
+                Swap.GetUInt32(minValue, 0),
                 "UInt32.MinValue failed."
                 );
         }
@@ -129,21 +141,21 @@ namespace Kraggs.IO.Endian.Tests
             var testValue = BitConverter.GetBytes(0102030405ul);
             Assert.AreEqual(
                 ConvertEndian.GetUInt64Copy(testValue, 0),
-                DataConverter.LittleEndian.GetUInt64(testValue, 0),
+                Native.GetUInt64(testValue, 0),
                 "0102030405ul failed."
                 );
 
             var maxValue = BitConverter.GetBytes(UInt64.MaxValue);
             Assert.AreEqual(
                 ConvertEndian.GetUInt64Copy(maxValue, 0),
-                DataConverter.LittleEndian.GetUInt64(maxValue, 0),
+                Native.GetUInt64(maxValue, 0),
                 "UInt64.MaxValue failed."
                 );
 
             var minValue = BitConverter.GetBytes(UInt64.MinValue);
             Assert.AreEqual(
                 ConvertEndian.GetUInt64Copy(minValue, 0),
-                DataConverter.LittleEndian.GetUInt64(minValue, 0),
+                Native.GetUInt64(minValue, 0),
                 "UInt64.MinValue failed."
                 );
         }
@@ -155,21 +167,21 @@ namespace Kraggs.IO.Endian.Tests
             var testValue = BitConverter.GetBytes(0102030405ul);
             Assert.AreEqual(
                 ConvertEndian.GetUInt64Swap(testValue, 0),
-                DataConverter.BigEndian.GetUInt64(testValue, 0),
+                Swap.GetUInt64(testValue, 0),
                 "0102030405ul failed."
                 );
 
             var maxValue = BitConverter.GetBytes(UInt64.MaxValue);            
             Assert.AreEqual(
                 ConvertEndian.GetUInt64Swap(maxValue, 0),
-                DataConverter.BigEndian.GetUInt64(maxValue, 0),
+                Swap.GetUInt64(maxValue, 0),
                 "UInt64.MaxValue failed."
                 );
 
             var minValue = BitConverter.GetBytes(UInt64.MinValue);
             Assert.AreEqual(
                 ConvertEndian.GetUInt64Swap(minValue, 0),
-                DataConverter.BigEndian.GetUInt64(minValue, 0),
+                Swap.GetUInt64(minValue, 0),
                 "UInt64.MinValue failed."
                 );
         }
@@ -185,14 +197,14 @@ namespace Kraggs.IO.Endian.Tests
 
             Assert.AreEqual(
                 ConvertEndian.GetFloatCopy(maxValue, 0),
-                DataConverter.LittleEndian.GetFloat(maxValue, 0),
+                Native.GetFloat(maxValue, 0),
                 "Single.MaxValue failed."
                 );
 
             var minValue = BitConverter.GetBytes(Single.MinValue);
             Assert.AreEqual(
                 ConvertEndian.GetFloatCopy(minValue, 0),
-                DataConverter.LittleEndian.GetFloat(minValue, 0),
+                Native.GetFloat(minValue, 0),
                 "Single.MinValue failed."
                 );
         }
@@ -204,14 +216,14 @@ namespace Kraggs.IO.Endian.Tests
 
             Assert.AreEqual(
                 ConvertEndian.GetFloatSwap(maxValue, 0),
-                DataConverter.BigEndian.GetFloat(maxValue, 0),
+                Swap.GetFloat(maxValue, 0),
                 "Single.MaxValue failed."
                 );
 
             var minValue = BitConverter.GetBytes(Single.MinValue);
             Assert.AreEqual(
                 ConvertEndian.GetFloatSwap(minValue, 0),
-                DataConverter.BigEndian.GetFloat(minValue, 0),
+                Swap.GetFloat(minValue, 0),
                 "Single.MinValue failed."
                 );
         }
@@ -223,14 +235,14 @@ namespace Kraggs.IO.Endian.Tests
 
             Assert.AreEqual(
                 ConvertEndian.GetDoubleCopy(maxValue, 0),
-                DataConverter.LittleEndian.GetDouble(maxValue, 0),
+                Native.GetDouble(maxValue, 0),
                 "Double.MaxValue failed."
                 );
 
             var minValue = BitConverter.GetBytes(Double.MinValue);
             Assert.AreEqual(
                 ConvertEndian.GetDoubleCopy(minValue, 0),
-                DataConverter.LittleEndian.GetDouble(minValue, 0),
+                Native.GetDouble(minValue, 0),
                 "Double.MinValue failed."
                 );
         }
@@ -242,14 +254,14 @@ namespace Kraggs.IO.Endian.Tests
 
             Assert.AreEqual(
                 ConvertEndian.GetDoubleSwap(maxValue, 0),
-                DataConverter.BigEndian.GetDouble(maxValue, 0),
+                Swap.GetDouble(maxValue, 0),
                 "Double.MaxValue failed."
                 );
 
             var minValue = BitConverter.GetBytes(Double.MinValue);
             Assert.AreEqual(
                 ConvertEndian.GetDoubleSwap(minValue, 0),
-                DataConverter.BigEndian.GetDouble(minValue, 0),
+                Swap.GetDouble(minValue, 0),
                 "Double.MinValue failed."
                 );
         }
@@ -265,14 +277,14 @@ namespace Kraggs.IO.Endian.Tests
             var testValue = BitConverter.GetBytes(16084);
             Assert.AreEqual(
                 ConvertEndian.GetInt16Copy(testValue, 0),
-                DataConverter.LittleEndian.GetInt16(testValue, 0),
+                Native.GetInt16(testValue, 0),
                 "16084 failed."
                 );
             // second a simple neg value test.
             var testValue2 = BitConverter.GetBytes(-8192);
             Assert.AreEqual(
                 ConvertEndian.GetInt16Copy(testValue2, 0),
-                DataConverter.LittleEndian.GetInt16(testValue2, 0),
+                Native.GetInt16(testValue2, 0),
                 "-8192 failed."
                 );
 
@@ -280,7 +292,7 @@ namespace Kraggs.IO.Endian.Tests
             var maxInt16 = BitConverter.GetBytes(Int16.MaxValue);
             Assert.AreEqual(
                 ConvertEndian.GetInt16Copy(maxInt16, 0),
-                DataConverter.LittleEndian.GetInt16(maxInt16, 0),
+                Native.GetInt16(maxInt16, 0),
                 "Int16.MaxValue Failed."
                 );
 
@@ -288,7 +300,7 @@ namespace Kraggs.IO.Endian.Tests
 
             Assert.AreEqual(
                 ConvertEndian.GetInt16Copy(minInt16, 0),
-                DataConverter.LittleEndian.GetInt16(minInt16, 0),
+                Native.GetInt16(minInt16, 0),
                 "Int16.MinValue Failed."
                 );
 
@@ -301,14 +313,14 @@ namespace Kraggs.IO.Endian.Tests
             var testValue = BitConverter.GetBytes(16084);
             Assert.AreEqual(
                 ConvertEndian.GetInt16Swap(testValue, 0),
-                DataConverter.BigEndian.GetInt16(testValue, 0),
+                Swap.GetInt16(testValue, 0),
                 "16084 failed."
                 );
             // second a simple neg value test.
             var testValue2 = BitConverter.GetBytes(-8192);
             Assert.AreEqual(
                 ConvertEndian.GetInt16Swap(testValue2, 0),
-                DataConverter.BigEndian.GetInt16(testValue2, 0),
+                Swap.GetInt16(testValue2, 0),
                 "-8192 failed."
                 );
 
@@ -316,7 +328,7 @@ namespace Kraggs.IO.Endian.Tests
             var maxInt16 = BitConverter.GetBytes(Int16.MaxValue);
             Assert.AreEqual(
                 ConvertEndian.GetInt16Swap(maxInt16, 0),
-                DataConverter.BigEndian.GetInt16(maxInt16, 0),
+                Swap.GetInt16(maxInt16, 0),
                 "Int16.MaxValue failed"
                 );
 
@@ -324,7 +336,7 @@ namespace Kraggs.IO.Endian.Tests
 
             Assert.AreEqual(
                 ConvertEndian.GetInt16Swap(minInt16, 0),
-                DataConverter.BigEndian.GetInt16(minInt16, 0),
+                Swap.GetInt16(minInt16, 0),
                 "Int16.MinValue Failed."
                 );
         }
@@ -336,14 +348,14 @@ namespace Kraggs.IO.Endian.Tests
             var testValue = BitConverter.GetBytes(16084 * 4);
             Assert.AreEqual(
                 ConvertEndian.GetInt32Copy(testValue, 0),
-                DataConverter.LittleEndian.GetInt32(testValue, 0),
+                Native.GetInt32(testValue, 0),
                 "16084 * 4 failed."
                 );
             // second a simple neg value test.
             var testValue2 = BitConverter.GetBytes(-8192 * 4);
             Assert.AreEqual(
                 ConvertEndian.GetInt32Copy(testValue2, 0),
-                DataConverter.LittleEndian.GetInt32(testValue2, 0),
+                Native.GetInt32(testValue2, 0),
                 "-8192 * 4 failed."
                 );
 
@@ -351,7 +363,7 @@ namespace Kraggs.IO.Endian.Tests
             var maxInt32 = BitConverter.GetBytes(Int32.MaxValue);
             Assert.AreEqual(
                 ConvertEndian.GetInt32Copy(maxInt32, 0),
-                DataConverter.LittleEndian.GetInt32(maxInt32, 0),
+                Native.GetInt32(maxInt32, 0),
                 "Int32.MaxValue Failed."                
                 );
 
@@ -359,7 +371,7 @@ namespace Kraggs.IO.Endian.Tests
 
             Assert.AreEqual(
                 ConvertEndian.GetInt32Copy(minInt32, 0),
-                DataConverter.LittleEndian.GetInt32(minInt32, 0),
+                Native.GetInt32(minInt32, 0),
                 "Int32.MinValue Failed."
                 );
 
@@ -372,14 +384,14 @@ namespace Kraggs.IO.Endian.Tests
             var testValue = BitConverter.GetBytes(16084 * 4);
             Assert.AreEqual(
                 ConvertEndian.GetInt32Swap(testValue, 0),
-                DataConverter.BigEndian.GetInt32(testValue, 0),
+                Swap.GetInt32(testValue, 0),
                 "16084 * 4 failed."
                 );
             // second a simple neg value test.
             var testValue2 = BitConverter.GetBytes(-8192 * 4);
             Assert.AreEqual(
                 ConvertEndian.GetInt32Swap(testValue2, 0),
-                DataConverter.BigEndian.GetInt32(testValue2, 0),
+                Swap.GetInt32(testValue2, 0),
                 "-8192 * 4 failed."
                 );
 
@@ -387,7 +399,7 @@ namespace Kraggs.IO.Endian.Tests
             var maxInt32 = BitConverter.GetBytes(Int32.MaxValue);
             Assert.AreEqual(
                 ConvertEndian.GetInt32Swap(maxInt32, 0),
-                DataConverter.BigEndian.GetInt32(maxInt32, 0),
+                Swap.GetInt32(maxInt32, 0),
                 "Int32.MaxValue failed"
                 );
 
@@ -395,7 +407,7 @@ namespace Kraggs.IO.Endian.Tests
 
             Assert.AreEqual(
                 ConvertEndian.GetInt32Swap(minInt32, 0),
-                DataConverter.BigEndian.GetInt32(minInt32, 0),
+                Swap.GetInt32(minInt32, 0),
                 "Int32.MinValue Failed."
                 );
         }
@@ -407,14 +419,14 @@ namespace Kraggs.IO.Endian.Tests
             var testValue = BitConverter.GetBytes(16084L);
             Assert.AreEqual(
                 ConvertEndian.GetInt64Copy(testValue, 0),
-                DataConverter.LittleEndian.GetInt64(testValue, 0),
+                Native.GetInt64(testValue, 0),
                 "16084L failed."
                 );
             // second a simple neg value test.
             var testValue2 = BitConverter.GetBytes(-8192L);
             Assert.AreEqual(
                 ConvertEndian.GetInt64Copy(testValue2, 0),
-                DataConverter.LittleEndian.GetInt64(testValue2, 0),
+                Native.GetInt64(testValue2, 0),
                 "-8192L failed."
                 );
 
@@ -422,7 +434,7 @@ namespace Kraggs.IO.Endian.Tests
             var maxInt64 = BitConverter.GetBytes(Int64.MaxValue);
             Assert.AreEqual(
                 ConvertEndian.GetInt64Copy(maxInt64, 0),
-                DataConverter.LittleEndian.GetInt64(maxInt64, 0),
+                Native.GetInt64(maxInt64, 0),
                 "Int64.MaxValue Failed."
                 );
 
@@ -430,7 +442,7 @@ namespace Kraggs.IO.Endian.Tests
 
             Assert.AreEqual(
                 ConvertEndian.GetInt64Copy(minInt64, 0),
-                DataConverter.LittleEndian.GetInt64(minInt64, 0),
+                Native.GetInt64(minInt64, 0),
                 "Int64.MinValue Failed."
                 );
 
@@ -443,14 +455,14 @@ namespace Kraggs.IO.Endian.Tests
             var testValue = BitConverter.GetBytes(16084L);
             Assert.AreEqual(
                 ConvertEndian.GetInt64Swap(testValue, 0),
-                DataConverter.BigEndian.GetInt64(testValue, 0),
+                Swap.GetInt64(testValue, 0),
                 "16084L failed."
                 );
             // second a simple neg value test.
             var testValue2 = BitConverter.GetBytes(-8192L);
             Assert.AreEqual(
                 ConvertEndian.GetInt64Swap(testValue2, 0),
-                DataConverter.BigEndian.GetInt64(testValue2, 0),
+                Swap.GetInt64(testValue2, 0),
                 "-8192L failed."
                 );
 
@@ -458,7 +470,7 @@ namespace Kraggs.IO.Endian.Tests
             var maxInt64 = BitConverter.GetBytes(Int64.MaxValue);
             Assert.AreEqual(
                 ConvertEndian.GetInt64Swap(maxInt64, 0),
-                DataConverter.BigEndian.GetInt64(maxInt64, 0),
+                Swap.GetInt64(maxInt64, 0),
                 "Int64.MaxValue failed"
                 );
 
@@ -466,7 +478,7 @@ namespace Kraggs.IO.Endian.Tests
 
             Assert.AreEqual(
                 ConvertEndian.GetInt64Swap(minInt64, 0),
-                DataConverter.BigEndian.GetInt64(minInt64, 0),
+                Swap.GetInt64(minInt64, 0),
                 "Int64.MinValue Failed."
                 );
         }
