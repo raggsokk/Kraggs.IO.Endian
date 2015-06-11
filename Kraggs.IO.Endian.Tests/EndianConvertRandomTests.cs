@@ -1,0 +1,432 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using NUnit;
+using NUnit.Core;
+using NUnit.Framework;
+
+using Mono;
+using Kraggs.IO.Endian;
+
+
+namespace Kraggs.IO.Endian.Tests
+{
+    [TestFixture()]
+    public class EndianConvertRandomTests
+    {
+        private byte[] pBuffer;
+        const int BUFFERSIZE = 1000;
+
+        [SetUp]
+        public void Setup()
+        {
+            if(pBuffer == null)
+            {
+                // create and randomize.
+                this.pBuffer = new byte[BUFFERSIZE * 8];
+                var r = new Random();
+                r.NextBytes(this.pBuffer);
+            }            
+        }
+
+        #region Unsigned integer Random bytes tests
+
+        [Test]
+        public void UInt16CopyValidate()
+        {
+            var test1Buffer = new UInt16[BUFFERSIZE / sizeof(UInt16)];
+            var test2Buffer = new UInt16[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetUInt16Copy(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.LittleEndian.GetUInt16(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void UInt16SwapValidate()
+        {
+            var test1Buffer = new UInt16[BUFFERSIZE / sizeof(UInt16)];
+            var test2Buffer = new UInt16[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetUInt16Swap(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.BigEndian.GetUInt16(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void UInt32CopyValidate()
+        {
+            var test1Buffer = new UInt32[BUFFERSIZE / sizeof(UInt32)];
+            var test2Buffer = new UInt32[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetUInt32Copy(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.LittleEndian.GetUInt32(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void UInt32SwapValidate()
+        {
+            var test1Buffer = new UInt32[BUFFERSIZE / sizeof(UInt32)];
+            var test2Buffer = new UInt32[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetUInt32Swap(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.BigEndian.GetUInt32(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void UInt64CopyValidate()
+        {
+            var test1Buffer = new UInt64[BUFFERSIZE / sizeof(UInt64)];
+            var test2Buffer = new UInt64[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetUInt64Copy(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.LittleEndian.GetUInt64(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void UInt64SwapValidate()
+        {
+            var test1Buffer = new UInt64[BUFFERSIZE / sizeof(UInt64)];
+            var test2Buffer = new UInt64[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetUInt64Swap(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.BigEndian.GetUInt64(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        #endregion
+
+
+        #region Floating point random bytes tests
+
+        [Test]
+        public void FloatCopyValidate()
+        {
+            var test1Buffer = new Single[BUFFERSIZE / sizeof(Single)];
+            var test2Buffer = new Single[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetFloatCopy(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.LittleEndian.GetFloat(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void FloatSwapValidate()
+        {
+            var test1Buffer = new Single[BUFFERSIZE / sizeof(Single)];
+            var test2Buffer = new Single[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetFloatSwap(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.BigEndian.GetFloat(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void DoubleCopyValidate()
+        {
+            var test1Buffer = new Double[BUFFERSIZE / sizeof(Double)];
+            var test2Buffer = new Double[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetDoubleCopy(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.LittleEndian.GetDouble(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void DoubleSwapValidate()
+        {
+            var test1Buffer = new Double[BUFFERSIZE / sizeof(Double)];
+            var test2Buffer = new Double[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetDoubleSwap(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.BigEndian.GetDouble(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        #endregion
+
+        #region Signed integer random bytes tests
+
+        [Test]
+        public void Int16CopyValidate()
+        {
+            var test1Buffer = new Int16[BUFFERSIZE / sizeof(Int16)];
+            var test2Buffer = new Int16[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetInt16Copy(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.LittleEndian.GetInt16(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void Int16SwapValidate()
+        {
+            var test1Buffer = new Int16[BUFFERSIZE / sizeof(Int16)];
+            var test2Buffer = new Int16[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetInt16Swap(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.BigEndian.GetInt16(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void Int32CopyValidate()
+        {
+            var test1Buffer = new Int32[BUFFERSIZE / sizeof(Int32)];
+            var test2Buffer = new Int32[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetInt32Copy(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.LittleEndian.GetInt32(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void Int32SwapValidate()
+        {
+            var test1Buffer = new Int32[BUFFERSIZE / sizeof(Int32)];
+            var test2Buffer = new Int32[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetInt32Swap(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.BigEndian.GetInt32(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void Int64CopyValidate()
+        {
+            var test1Buffer = new Int64[BUFFERSIZE / sizeof(Int64)];
+            var test2Buffer = new Int64[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetInt64Copy(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.LittleEndian.GetInt64(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        [Test]
+        public void Int64SwapValidate()
+        {
+            var test1Buffer = new Int64[BUFFERSIZE / sizeof(Int64)];
+            var test2Buffer = new Int64[test1Buffer.Length];
+            var bytePos = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+            {
+                test1Buffer[i] = ConvertEndian.GetInt64Swap(pBuffer, bytePos);
+                test2Buffer[i] = DataConverter.BigEndian.GetInt64(pBuffer, bytePos);
+            }
+
+            var errorCount = 0;
+
+            for (int i = 0; i < test1Buffer.Length; i++)
+                if (test1Buffer[i] != test2Buffer[i])
+                    errorCount++;
+
+            Assert.AreEqual(errorCount, 0,
+                string.Format("Failed {0} of {1} random test conversions",
+                errorCount, test1Buffer.Length));
+        }
+
+        #endregion
+    }
+}
