@@ -161,26 +161,27 @@ namespace Kraggs.IO
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double GetDoubleCopy(byte[] buffer, int index)
         {
-            //TODO: This might be faster
-            //BitConverter.Int64BitsToDouble(GetInt64Copy(buffer, index));
+            // this is in my test 5%-10% faster.
+            return BitConverter.Int64BitsToDouble(GetInt64Copy(buffer, index));
 
-            var s = new Byte8()
-            {
-                UInt64 = GetUInt64Copy(buffer, index)
-            };
-            return s.Double;
+            //var s = new Byte8()
+            //{
+            //    UInt64 = GetUInt64Copy(buffer, index)
+            //};
+            //return s.Double;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] 
         public static double GetDoubleSwap(byte[] buffer, int index)
         {
-            //TODO: This might be faster
-            //BitConverter.Int64BitsToDouble(GetInt64Swap(buffer, index));
-            var s = new Byte8()
-            {
-                UInt64 = GetUInt64Swap(buffer, index)
-            };
-            return s.Double;
+            //this is in my tests 5-10% faster.
+            return BitConverter.Int64BitsToDouble(GetInt64Swap(buffer, index));
+
+            //var s = new Byte8()
+            //{
+            //    UInt64 = GetUInt64Swap(buffer, index)
+            //};
+            //return s.Double;
 
             //if (MonoConverter.IsLittleEndian)
             //    return MonoConverter.BigEndian.GetDouble(buffer, index);
@@ -193,7 +194,7 @@ namespace Kraggs.IO
         #region Float
 
         [StructLayout(LayoutKind.Explicit)]
-        private struct Byte4
+        internal struct Byte4
         {
             [FieldOffset(0)]
             public uint UInt32;

@@ -3,7 +3,7 @@
 Kraggs.IO.Endian is a simple Portable binary endian aware Reader and Writer library.
 Instead of using the excellent [Mono.DataConvert](http://www.mono-project.com/Mono_DataConvert) I created my own which is a lot smaller
 since it doesn't have the Perl like Pack/Unpack functions or the text encoding/decoding code.
-On the other hand it is for most functions faster, portable and coded against .NET 4.5 api.
+On the other hand it is for some functions faster, portable and coded against .NET 4.5 api.
 The speed improvements are accompished mainly by avoiding using unsafe code whenever possible
 (and thereby let the compiler optimize better) and heavy use of [Aggressive Inlining](https://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.methodimploptions(v=vs.110).aspx)
 

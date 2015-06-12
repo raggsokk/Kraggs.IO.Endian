@@ -18,7 +18,7 @@ namespace Kraggs.IO.Endian.Tests
     public class EndianReadRandomTests
     {
         private byte[] pBuffer;
-        const int BUFFERSIZE = 1000;
+        const int BUFFERSIZE = 1000000;
 
         private DataConverter Native;
         private DataConverter Swap;

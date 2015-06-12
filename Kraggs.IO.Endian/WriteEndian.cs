@@ -36,7 +36,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-using MonoTMP;
+//using MonoTMP;
 
 namespace Kraggs.IO
 {
@@ -49,22 +49,26 @@ namespace Kraggs.IO
     /// </summary>
     internal static class WriteEndian
     {
-        private static readonly DataConverter Native = DataConverter.Native;
-        private static readonly DataConverter Swap = DataConverter.IsLittleEndian ?
-            DataConverter.BigEndian : DataConverter.LittleEndian;
+        //private static readonly DataConverter Native = DataConverter.Native;
+        //private static readonly DataConverter Swap = DataConverter.IsLittleEndian ?
+        //    DataConverter.BigEndian : DataConverter.LittleEndian;
 
         #region UInt16
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesCopy(byte[] buffer, int index, UInt16 value)
         {
-            Native.PutBytes(buffer, index, value);
+            //Native.PutBytes(buffer, index, value);
+            buffer[index] = (byte)(value & 0xFF);
+            buffer[index + 1] = (byte)((value >> 8) & 0xFF);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesSwap(byte[] buffer, int index, UInt16 value)
         {
-            Swap.PutBytes(buffer, index, value);
+            //Swap.PutBytes(buffer, index, value);
+            buffer[index + 1] = (byte)(value & 0xFF);
+            buffer[index] = (byte)((value >> 8) & 0xFF);
         }
 
         #endregion
@@ -74,45 +78,120 @@ namespace Kraggs.IO
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesCopy(byte[] buffer, int index, UInt32 value)
         {
-            Native.PutBytes(buffer, index, value);
+            // this is faster since it doesn't validate input which unsafe code has to do.
+            // but its only 5% or so, and dependent on inlining.
+            buffer[index] = (byte)(value & 0xFF);
+            buffer[index + 1] = (byte)((value >> 8) & 0xFF);
+            buffer[index + 2] = (byte)((value >> 16) & 0xFF);
+            buffer[index + 3] = (byte)((value >> 24));
+
+            //Native.PutBytes(buffer, index, value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesSwap(byte[] buffer, int index, UInt32 value)
         {
-            Swap.PutBytes(buffer, index, value);
+            // this is a lot faster I think
+            buffer[index + 3] = (byte)(value & 0xFF);
+            buffer[index + 2] = (byte)((value >> 8) & 0xFF);
+            buffer[index + 1] = (byte)((value >> 16) & 0xFF);
+            buffer[index] = (byte)((value >> 24));
+
+            //Swap.PutBytes(buffer, index, value);
         }
 
         #endregion
 
         #region UInt64
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void PutBytesCopy(byte[] buffer, int index, UInt64 value)
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //public static void PutBytesCopy(byte[] buffer, int index, UInt64 value)
+        //{
+        //    // Dont think this any faster.
+        //    //Native.PutBytes(buffer, index, value);
+
+        //    UInt32 low = (UInt32)(value & 0XFFFFFFFF);
+        //    UInt32 high = (UInt32)((value >> 32));
+        //    //UInt32 high = (UInt32)((value >> 32) & 0XFFFF);
+        //    PutBytesCopy(buffer, index, low);
+        //    PutBytesCopy(buffer, index + 4, high);
+        //}
+        public unsafe static void PutBytesCopy(byte[] buffer, int index, UInt64 value)
         {
-            Native.PutBytes(buffer, index, value);
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+            if (index < 0 || index > buffer.Length - sizeof(UInt64))
+                throw new ArgumentException("Index out of bounds", "index");
+
+            fixed (byte* ptr = &buffer[index])
+            {
+                UInt64* source = (UInt64*)&value;
+                *((UInt64*)ptr) = *source;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesSwap(byte[] buffer, int index, UInt64 value)
         {
-            Swap.PutBytes(buffer, index, value);
+            //Swap.PutBytes(buffer, index, value);
+            UInt32 low = (UInt32)(value & 0XFFFFFFFF);
+            UInt32 high = (UInt32)((value >> 32));
+            //UInt32 high = (UInt32)((value >> 32) & 0XFFFF);
+            PutBytesSwap(buffer, index + 4, low);
+            PutBytesSwap(buffer, index, high);
         }
 
         #endregion
 
         #region Float
 
+        //public unsafe static void PutBytesCopy(byte[] buffer, int index, float value)
+        //{
+        //    if (buffer == null)
+        //        throw new ArgumentNullException("buffer");
+        //    if (index < 0 || index > buffer.Length - sizeof(float))
+        //        throw new ArgumentException("Index out of bounds", "index");
+
+        //    fixed (byte* ptr = &buffer[index])
+        //    {
+        //        float* source = (float*)&value;
+        //        *((float*)ptr) = *source;
+        //    }
+        //}
+
+        //public static void PutBytesSwap(byte[] buffer, int index, float value)
+        //{
+        //    if (buffer == null)
+        //        throw new ArgumentNullException("buffer");
+        //    if (index < 0 || index > buffer.Length - sizeof(float))
+        //        throw new ArgumentException("Index out of bounds", "index");
+
+        //    fixed (byte* ptr = &buffer[index])
+        //    {
+
+        //    }
+        //}
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesCopy(byte[] buffer, int index, float value)
         {
-            Native.PutBytes(buffer, index, value);
+            var s = new ReadEndian.Byte4()
+            {
+                Float = value
+            };
+            PutBytesCopy(buffer, index, s.UInt32);
+            //Native.PutBytes(buffer, index, value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesSwap(byte[] buffer, int index, float value)
         {
-            Swap.PutBytes(buffer, index, value);
+            var s = new ReadEndian.Byte4()
+            {
+                Float = value
+            };
+            PutBytesSwap(buffer, index, s.UInt32);
+            //Swap.PutBytes(buffer, index, value);
         }
 
         #endregion
@@ -122,13 +201,17 @@ namespace Kraggs.IO
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesCopy(byte[] buffer, int index, double value)
         {
-            Native.PutBytes(buffer, index, value);
+            //Native.PutBytes(buffer, index, value);
+            var d = BitConverter.DoubleToInt64Bits(value);
+            PutBytesCopy(buffer, index, d);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesSwap(byte[] buffer, int index, double value)
         {
-            Swap.PutBytes(buffer, index, value);
+            var d = BitConverter.DoubleToInt64Bits(value);
+            PutBytesSwap(buffer, index, d);
+            //Swap.PutBytes(buffer, index, value);
         }
 
         #endregion
@@ -138,13 +221,17 @@ namespace Kraggs.IO
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesCopy(byte[] buffer, int index, Int16 value)
         {
-            Native.PutBytes(buffer, index, value);
+            //Native.PutBytes(buffer, index, value);
+            buffer[index] = (byte)(value & 0xFF);
+            buffer[index + 1] = (byte)((value >> 8) & 0xFF);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesSwap(byte[] buffer, int index, Int16 value)
         {
-            Swap.PutBytes(buffer, index, value);
+            //Swap.PutBytes(buffer, index, value);
+            buffer[index + 1] = (byte)(value & 0xFF);
+            buffer[index] = (byte)((value >> 8) & 0xFF);
         }
 
         #endregion
@@ -154,29 +241,60 @@ namespace Kraggs.IO
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesCopy(byte[] buffer, int index, Int32 value)
         {
-            Native.PutBytes(buffer, index, value);
+            //Native.PutBytes(buffer, index, value);
+            // this is faster since it doesn't validate input which unsafe code has to do.
+            // but its only 5% or so, and dependent on inlining.
+            buffer[index] = (byte)(value & 0xFF);
+            buffer[index + 1] = (byte)((value >> 8) & 0xFF);
+            buffer[index + 2] = (byte)((value >> 16) & 0xFF);
+            buffer[index + 3] = (byte)((value >> 24));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesSwap(byte[] buffer, int index, Int32 value)
         {
-            Swap.PutBytes(buffer, index, value);
+            //Swap.PutBytes(buffer, index, value);
+            // this is faster since it doesn't validate input which unsafe code has to do.
+            // but its only 5% or so, and dependent on inlining.
+            buffer[index + 3] = (byte)(value & 0xFF);
+            buffer[index + 2] = (byte)((value >> 8) & 0xFF);
+            buffer[index + 1] = (byte)((value >> 16) & 0xFF);
+            buffer[index] = (byte)((value >> 24));
         }
 
         #endregion
 
         #region Int64
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void PutBytesCopy(byte[] buffer, int index, Int64 value)
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //public static void PutBytesCopy(byte[] buffer, int index, Int64 value)
+        //{
+        //    Native.PutBytes(buffer, index, value);
+        //}
+        public unsafe static void PutBytesCopy(byte[] buffer, int index, Int64 value)
         {
-            Native.PutBytes(buffer, index, value);
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+            if (index < 0 || index > buffer.Length - sizeof(Int64))
+                throw new ArgumentException("Index out of bounds", "index");
+
+            fixed (byte* ptr = &buffer[index])
+            {
+                Int64* source = (Int64*)&value;
+                *((Int64*)ptr) = *source;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesSwap(byte[] buffer, int index, Int64 value)
         {
-            Swap.PutBytes(buffer, index, value);
+            //Swap.PutBytes(buffer, index, value);
+            //Swap.PutBytes(buffer, index, value);
+            UInt32 low = (UInt32)(value & 0XFFFFFFFF);
+            UInt32 high = (UInt32)((value >> 32));
+            //UInt32 high = (UInt32)((value >> 32) & 0XFFFF);
+            PutBytesSwap(buffer, index + 4, low);
+            PutBytesSwap(buffer, index, high);
         }
 
         #endregion
