@@ -15,7 +15,7 @@ using Kraggs.IO.Endian;
 namespace Kraggs.IO.Endian.Tests
 {
     [TestFixture()]
-    public class EndianConvertRandomTests
+    public class EndianReadRandomTests
     {
         private byte[] pBuffer;
         const int BUFFERSIZE = 1000;
@@ -52,7 +52,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetUInt16Copy(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetUInt16Copy(pBuffer, bytePos);
                 test2Buffer[i] = Native.GetUInt16(pBuffer, bytePos);
             }
 
@@ -76,7 +76,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetUInt16Swap(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetUInt16Swap(pBuffer, bytePos);
                 test2Buffer[i] = Swap.GetUInt16(pBuffer, bytePos);
             }
 
@@ -100,7 +100,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetUInt32Copy(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetUInt32Copy(pBuffer, bytePos);
                 test2Buffer[i] = Native.GetUInt32(pBuffer, bytePos);
             }
 
@@ -124,7 +124,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetUInt32Swap(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetUInt32Swap(pBuffer, bytePos);
                 test2Buffer[i] = Swap.GetUInt32(pBuffer, bytePos);
             }
 
@@ -148,7 +148,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetUInt64Copy(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetUInt64Copy(pBuffer, bytePos);
                 test2Buffer[i] = Native.GetUInt64(pBuffer, bytePos);
             }
 
@@ -172,7 +172,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetUInt64Swap(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetUInt64Swap(pBuffer, bytePos);
                 test2Buffer[i] = Swap.GetUInt64(pBuffer, bytePos);
             }
 
@@ -201,7 +201,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetFloatCopy(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetFloatCopy(pBuffer, bytePos);
                 test2Buffer[i] = Native.GetFloat(pBuffer, bytePos);
             }
 
@@ -225,7 +225,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetFloatSwap(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetFloatSwap(pBuffer, bytePos);
                 test2Buffer[i] = Swap.GetFloat(pBuffer, bytePos);
             }
 
@@ -249,7 +249,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetDoubleCopy(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetDoubleCopy(pBuffer, bytePos);
                 test2Buffer[i] = Native.GetDouble(pBuffer, bytePos);
             }
 
@@ -273,7 +273,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetDoubleSwap(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetDoubleSwap(pBuffer, bytePos);
                 test2Buffer[i] = Swap.GetDouble(pBuffer, bytePos);
             }
 
@@ -301,7 +301,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetInt16Copy(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetInt16Copy(pBuffer, bytePos);
                 test2Buffer[i] = Native.GetInt16(pBuffer, bytePos);
             }
 
@@ -325,7 +325,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetInt16Swap(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetInt16Swap(pBuffer, bytePos);
                 test2Buffer[i] = Swap.GetInt16(pBuffer, bytePos);
             }
 
@@ -349,7 +349,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetInt32Copy(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetInt32Copy(pBuffer, bytePos);
                 test2Buffer[i] = Native.GetInt32(pBuffer, bytePos);
             }
 
@@ -373,7 +373,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetInt32Swap(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetInt32Swap(pBuffer, bytePos);
                 test2Buffer[i] = Swap.GetInt32(pBuffer, bytePos);
             }
 
@@ -397,7 +397,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetInt64Copy(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetInt64Copy(pBuffer, bytePos);
                 test2Buffer[i] = Native.GetInt64(pBuffer, bytePos);
             }
 
@@ -421,7 +421,7 @@ namespace Kraggs.IO.Endian.Tests
 
             for (int i = 0; i < test1Buffer.Length; i++)
             {
-                test1Buffer[i] = ConvertEndian.GetInt64Swap(pBuffer, bytePos);
+                test1Buffer[i] = ReadEndian.GetInt64Swap(pBuffer, bytePos);
                 test2Buffer[i] = Swap.GetInt64(pBuffer, bytePos);
             }
 

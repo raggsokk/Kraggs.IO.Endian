@@ -47,49 +47,49 @@ namespace Kraggs.IO
         public override ushort ReadUInt16()
         {
             FillBuffer(2);
-            return ConvertEndian.GetUInt16Swap(pBuffer, 0);
+            return ReadEndian.GetUInt16Swap(pBuffer, 0);
         }
 
         public override uint ReadUInt32()
         {
             FillBuffer(4);
-            return ConvertEndian.GetUInt32Swap(pBuffer, 0);
+            return ReadEndian.GetUInt32Swap(pBuffer, 0);
         }
 
         public override ulong ReadUInt64()
         {
             FillBuffer(8);
-            return ConvertEndian.GetUInt64Swap(pBuffer, 0);
+            return ReadEndian.GetUInt64Swap(pBuffer, 0);
         }
 
         public override float ReadFloat()
         {
             FillBuffer(4);
-            return ConvertEndian.GetFloatSwap(pBuffer, 0);
+            return ReadEndian.GetFloatSwap(pBuffer, 0);
         }
 
         public override double ReadDouble()
         {
             FillBuffer(8);
-            return ConvertEndian.GetDoubleSwap(pBuffer, 0);
+            return ReadEndian.GetDoubleSwap(pBuffer, 0);
         }
 
         public override short ReadInt16()
         {
             FillBuffer(2);
-            return ConvertEndian.GetInt16Swap(pBuffer, 0);
+            return ReadEndian.GetInt16Swap(pBuffer, 0);
         }
 
         public override int ReadInt32()
         {
             FillBuffer(4);
-            return ConvertEndian.GetInt32Swap(pBuffer, 0);
+            return ReadEndian.GetInt32Swap(pBuffer, 0);
         }
 
         public override long ReadInt64()
         {
             FillBuffer(8);
-            return ConvertEndian.GetInt64Swap(pBuffer, 0);
+            return ReadEndian.GetInt64Swap(pBuffer, 0);
         }
 
         #endregion

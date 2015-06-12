@@ -62,8 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataConverter.cs" />
-    <Compile Include="EndianConvertBasicTests.cs" />
-    <Compile Include="EndianConvertRandomTests.cs" />
+    <Compile Include="EndianReadBasicTests.cs" />
+    <Compile Include="EndianReadRandomTests.cs" />
+    <Compile Include="EndianWriteBasicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿#region License
 //
-// ConvertEndian.cs
+// ReadEndian.cs
 // 
 // The MIT License (MIT)
 //
@@ -43,12 +43,11 @@ namespace Kraggs.IO
     /// <summary>
     /// Internal Static impl class.
     /// 
-    /// For now, must functions are using Mono.DataConvert as fallback
-    /// in order to establish baseline and something to test again.
+    /// Formerly ConvertEndian.
     /// 
     /// NOTE: No input validation is done.
     /// </summary>
-    internal static class ConvertEndian
+    internal static class ReadEndian
     {
         #region UInt16
 
