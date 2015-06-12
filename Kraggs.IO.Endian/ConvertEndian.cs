@@ -38,7 +38,7 @@ using System.Runtime.InteropServices;
 
 //using Mono;
 
-namespace Kraggs.IO.Endian
+namespace Kraggs.IO
 {
     /// <summary>
     /// Internal Static impl class.
@@ -199,6 +199,7 @@ namespace Kraggs.IO.Endian
             [FieldOffset(0)]
             public uint UInt32;
 
+            //This doesnt work.
             //[FieldOffset(0)]
             //public int Int32;
 

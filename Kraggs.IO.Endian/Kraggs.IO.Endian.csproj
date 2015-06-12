@@ -8,7 +8,7 @@
     <ProjectGuid>{AE54A1E5-9899-47CB-9C83-BB42AFEBAE3D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Kraggs.IO.Endian</RootNamespace>
+    <RootNamespace>Kraggs.IO</RootNamespace>
     <AssemblyName>Kraggs.IO.Endian</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
@@ -40,7 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConvertEndian.cs" />
+    <Compile Include="NativeEndianReader.cs" />
+    <Compile Include="EndianReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SwapEndianReader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
