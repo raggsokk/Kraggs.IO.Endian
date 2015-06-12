@@ -38,6 +38,10 @@ using System.Runtime.InteropServices;
 
 namespace Kraggs.IO
 {
+    /// <summary>
+    /// Used to read big endian or little endian from a stream.
+    /// </summary>
+    //TODO: Should we inherit the stream class instead?
     public abstract partial class EndianReader : IDisposable
     {
         //protected Stream pStream;
@@ -63,19 +67,44 @@ namespace Kraggs.IO
             this.pBuffer = new byte[sizeof(double)];
         }
 
+        /// <summary>
+        /// Create a non-endian converting EndianReader.
+        /// Usefull as a BinaryReader alternative.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="leaveOpen"></param>
+        /// <returns></returns>
         public static EndianReader CreateNativeReader(Stream stream, bool leaveOpen = false)
         {
-            throw new NotImplementedException();
+            return new NativeEndianReader(stream, leaveOpen);
         }
 
+        /// <summary>
+        /// Creates a EndianReader for reading LittleEndian Binary Data.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="leaveOpen"></param>
+        /// <returns></returns>
         public static EndianReader CreateLittleEndianReader(Stream stream, bool leaveOpen = false)
         {
-            throw new NotImplementedException();
+            if (IsLittleEndian)
+                return new NativeEndianReader(stream, leaveOpen);
+            else
+                return new SwapEndianReader(stream, leaveOpen);
         }
 
+        /// <summary>
+        /// Creates a EndianReader for reading Big Endian Binary Data.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="leaveOpen"></param>
+        /// <returns></returns>
         public static EndianReader CreateBigEndianReader(Stream stream, bool leaveOpen = false)
         {
-            throw new NotImplementedException();
+            if (IsLittleEndian)
+                return new SwapEndianReader(stream, leaveOpen);
+            else
+                return new NativeEndianReader(stream, leaveOpen);
         }
 
         #endregion
@@ -109,15 +138,47 @@ namespace Kraggs.IO
             return BaseStream.Read(pBuffer, 0, count);                        
         }
 
+        /// <summary>
+        /// Reads in a UInt16 in spesificed endianness.
+        /// </summary>
+        /// <returns></returns>
         public abstract UInt16 ReadUInt16();
+        /// <summary>
+        /// Reads in a UInt32 in spesificed endianness.
+        /// </summary>
+        /// <returns></returns>
         public abstract UInt32 ReadUInt32();
+        /// <summary>
+        /// Reads in a UInt64 in spesificed endianness.
+        /// </summary>
+        /// <returns></returns>
         public abstract UInt64 ReadUInt64();
 
+        /// <summary>
+        /// Reads in a float in specified endianness.
+        /// </summary>
+        /// <returns></returns>
         public abstract float ReadFloat();
+        /// <summary>
+        /// Reads in a double in specified endianess.
+        /// </summary>
+        /// <returns></returns>
         public abstract double ReadDouble();
 
+        /// <summary>
+        /// Reads in a Int16 in spesificed endianness.
+        /// </summary>
+        /// <returns></returns>
         public abstract Int16 ReadInt16();
+        /// <summary>
+        /// Reads in a Int32 in spesificed endianness.
+        /// </summary>
+        /// <returns></returns>
         public abstract Int32 ReadInt32();
+        /// <summary>
+        /// Reads in a Int64 in spesificed endianness.
+        /// </summary>
+        /// <returns></returns>
         public abstract Int64 ReadInt64();
 
 
@@ -141,6 +202,15 @@ namespace Kraggs.IO
             return BaseStream.Read(buffer, index, count);
         }
 
+        /// <summary>
+        /// Simply wraps baseStream.ReadAsync.
+        /// NO Endian Handling!
+        /// </summary>
+        /// <param name="buffer">Buffer to write read data to.</param>
+        /// <param name="index">where in buffer to start writing at.</param>
+        /// <param name="count">number of bytes to read.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<int> ReadAsync(byte[] buffer, int index = 0, int count = -1, CancellationToken? cancellationToken = null )
         {
             if (count == -1)
@@ -159,6 +229,9 @@ namespace Kraggs.IO
         //Why do we have this?
         public bool IsDisposed { get; protected set; }
 
+        /// <summary>
+        /// Disposes of this EndianReader object.
+        /// </summary>
         public void Dispose()
         {
             //throw new NotImplementedException();

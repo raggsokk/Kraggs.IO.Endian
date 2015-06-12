@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Kraggs.IO.Endian")]
-[assembly: AssemblyDescription("Binary and endian swapper in one.")]
+[assembly: AssemblyTitle("Binary and Endian Reader/Writer in one.")]
+[assembly: AssemblyDescription("Binary and Endian Reader/Writer in one.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Kraggs.IO.Endian")]
-[assembly: AssemblyCopyright("Copyright © 2015")]
+[assembly: AssemblyCopyright("Copyright © 2015 Jarle Hansen")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
