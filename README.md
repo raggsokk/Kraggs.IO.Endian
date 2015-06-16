@@ -11,8 +11,11 @@ The code is validated against Mono.DataConvert with nUnit tests, but for now is 
 on Little Endian machines since I currently don't have access to a Big Endian Machine.
 
 ## TODO	
-	* Add EndianWriter code
-	* Add (Async) Array reading/writing from stream.	
+	* ~~Add EndianWriter code~~
+	* Add EndianConverter code for non stream testing.
+	* Add end user performance test for EndianConverter.
+	* Recheck EndianReader/Writer based on performance results.
+	* Add (Async) Array reading/writing.
 	* Add Text reading/writing.
 	* Actually run nUnit tests on a Big Endian machine to validate code.
 
