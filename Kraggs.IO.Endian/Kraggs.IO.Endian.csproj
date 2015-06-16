@@ -39,15 +39,18 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EndianWriter.cs" />
-    <Compile Include="NativeEndianWriter.cs" />
-    <Compile Include="ReadEndian.cs" />
-    <Compile Include="NativeEndianReader.cs" />
-    <Compile Include="EndianReader.cs" />
+    <Compile Include="Converter\CopyConverter.cs" />
+    <Compile Include="Converter\EndianConverter.cs" />
+    <Compile Include="Converter\SwapConverter.cs" />
+    <Compile Include="Stream\EndianWriter.cs" />
+    <Compile Include="Stream\NativeEndianWriter.cs" />
+    <Compile Include="Internal\ReadEndian.cs" />
+    <Compile Include="Stream\NativeEndianReader.cs" />
+    <Compile Include="Stream\EndianReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SwapEndianReader.cs" />
-    <Compile Include="SwapEndianWriter.cs" />
-    <Compile Include="WriteEndian.cs" />
+    <Compile Include="Stream\SwapEndianReader.cs" />
+    <Compile Include="Stream\SwapEndianWriter.cs" />
+    <Compile Include="Internal\WriteEndian.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
