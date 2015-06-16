@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("0.3.*")]
 // [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("0.3.0.0")]
+[assembly: AssemblyFileVersion("0.4.0.0")]
 
 [assembly: InternalsVisibleTo("Kraggs.IO.Endian.Tests")]
 //[assembly: InternalsVisibleTo("Kraggs.IO.Endian.Tests.dll")]
