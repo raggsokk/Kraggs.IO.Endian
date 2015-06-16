@@ -189,7 +189,6 @@ namespace Kraggs.IO.Endian.Tests
 
         #endregion
 
-
         #region Floating point random bytes tests
 
         [Test]
@@ -230,14 +229,29 @@ namespace Kraggs.IO.Endian.Tests
             }
 
             var errorCount = 0;
+            var FirstError = -1;
 
             for (int i = 0; i < test1Buffer.Length; i++)
                 if (test1Buffer[i] != test2Buffer[i])
+                {
+                    if (FirstError == -1)
+                        FirstError = i;
                     errorCount++;
+                }
 
-            Assert.AreEqual(errorCount, 0,
-                string.Format("Failed {0} of {1} random test conversions",
-                errorCount, test1Buffer.Length));
+            //TODO: Find why this test fails sometimes.
+            if (errorCount == 0)
+            {
+                Assert.AreEqual(errorCount, 0,
+                    string.Format("Failed {0} of {1} random test conversions",
+                    errorCount, test1Buffer.Length));
+            }
+            else
+            {
+                Assert.AreEqual(errorCount, 0,
+                    string.Format("Failed {0} of {1} random test conversions. FirstError: '{2}' != '{3}'",
+                        errorCount, test1Buffer.Length, test1Buffer[FirstError], test2Buffer[FirstError]));
+            }
         }
 
         [Test]

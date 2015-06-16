@@ -41,9 +41,11 @@ using System.Runtime.InteropServices;
 namespace Kraggs.IO
 {
     /// <summary>
-    /// This is basically a reimplement of Mono DataConverter unfortunately.
-    /// But some of the code is changed based on performance tests.
-    /// And if possible, unsafe code is avoided in order to enable JIT optimizations.
+    /// This is basically a reimplement of Mono DataConverter interface unfortunately.
+    /// But some of the code are going to be changed based on performance tests.
+    /// And if possible, unsafe code is avoided in order to enable JIT optimizations
+    /// and aggressive inlining. 
+    /// (Agressive inlining dont work on unsafe and virtual methods).
     /// </summary>
     public abstract partial class EndianConverter
     {

@@ -2,6 +2,7 @@
   <Settings activeconfig="Debug" />
   <Config name="Debug" binpathtype="Auto">
     <assembly path="bin\Debug\Kraggs.IO.Endian.Tests.dll" />
+    <assembly path="bin\Release\Kraggs.IO.Endian.Tests.dll" />
   </Config>
   <Config name="Release" binpathtype="Auto" />
 </NUnitProject>

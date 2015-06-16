@@ -66,6 +66,7 @@
     <Compile Include="EndianReadRandomTests.cs" />
     <Compile Include="EndianWriteBasicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SwapConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
