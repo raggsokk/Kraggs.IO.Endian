@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CopyConverterTests.cs" />
     <Compile Include="DataConverter.cs" />
     <Compile Include="EndianReadBasicTests.cs" />
     <Compile Include="EndianReadRandomTests.cs" />
