@@ -40,18 +40,21 @@ using System.Runtime.InteropServices;
 
 namespace Kraggs.IO
 {
+    /// <summary>
+    /// Swap Converter.
+    /// </summary>
     internal sealed partial class SwapConverter : EndianConverter
     {
         #region Reading from byte Arrays
 
         public override float ReadFloat(byte[] data, int index)
         {
-            throw new NotImplementedException();
+            return ReadEndian.GetFloatSwap(data, index);
         }
 
         public override double ReadDouble(byte[] data, int index)
         {
-            throw new NotImplementedException();
+            return ReadEndian.GetDoubleSwap(data, index);
         }
 
         public override decimal ReadDecimal(byte[] data, int index)
@@ -61,32 +64,32 @@ namespace Kraggs.IO
 
         public override ushort ReadUInt16(byte[] data, int index)
         {
-            throw new NotImplementedException();
+            return ReadEndian.GetUInt16Swap(data, index);
         }
 
         public override uint ReadUInt32(byte[] data, int index)
         {
-            throw new NotImplementedException();
+            return ReadEndian.GetUInt32Swap(data, index);
         }
 
         public override ulong ReadUInt64(byte[] data, int index)
         {
-            throw new NotImplementedException();
+            return ReadEndian.GetUInt64Swap(data, index);
         }
 
         public override short ReadInt16(byte[] data, int index)
         {
-            throw new NotImplementedException();
+            return ReadEndian.GetInt16Swap(data, index);
         }
 
         public override int ReadInt32(byte[] data, int index)
         {
-            throw new NotImplementedException();
+            return ReadEndian.GetInt32Swap(data, index);
         }
 
         public override long ReadInt64(byte[] data, int index)
         {
-            throw new NotImplementedException();
+            return ReadEndian.GetInt64Swap(data, index);
         }
 
         #endregion
@@ -95,47 +98,48 @@ namespace Kraggs.IO
 
         public override void Write(byte[] dest, int index, float value)
         {
-            throw new NotImplementedException();
+            WriteEndian.PutBytesSwap(dest, index, value);
         }
 
         public override void Write(byte[] dest, int index, double value)
         {
-            throw new NotImplementedException();
+            WriteEndian.PutBytesSwap(dest, index, value);
         }
 
         public override void Write(byte[] dest, int index, decimal scalar)
         {
+            //WriteEndian.PutBytesSwap(dest, index, value);
             throw new NotImplementedException();
         }
 
         public override void Write(byte[] dest, int index, ushort value)
         {
-            throw new NotImplementedException();
+            WriteEndian.PutBytesSwap(dest, index, value);
         }
 
         public override void Write(byte[] dest, int index, uint value)
         {
-            throw new NotImplementedException();
+            WriteEndian.PutBytesSwap(dest, index, value);
         }
 
         public override void Write(byte[] dest, int index, ulong value)
         {
-            throw new NotImplementedException();
+            WriteEndian.PutBytesSwap(dest, index, value);
         }
 
         public override void Write(byte[] dest, int index, short value)
         {
-            throw new NotImplementedException();
+            WriteEndian.PutBytesSwap(dest, index, value);
         }
 
         public override void Write(byte[] dest, int index, int value)
         {
-            throw new NotImplementedException();
+            WriteEndian.PutBytesSwap(dest, index, value);
         }
 
         public override void Write(byte[] dest, int index, long value)
         {
-            throw new NotImplementedException();
+            WriteEndian.PutBytesSwap(dest, index, value);
         }
 
         #endregion

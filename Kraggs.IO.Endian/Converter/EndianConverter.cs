@@ -47,6 +47,9 @@ namespace Kraggs.IO
     /// </summary>
     public abstract partial class EndianConverter
     {
+        /// <summary>
+        /// Is this machine using little endian or big endian layout?
+        /// </summary>
         public static readonly bool IsLittleEndian = BitConverter.IsLittleEndian;
 
         internal static readonly EndianConverter CopyConverter = new CopyConverter();
@@ -54,78 +57,184 @@ namespace Kraggs.IO
 
         //public EndianConverter()
         //{
-        //    BitConverter.
+        //    //TODO: default constructor public?
         //}
 
         #region Constuctors
 
+        /// <summary>
+        /// Returns an Endian Converter which read/write little endian data.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static EndianConverter CreateLittleEndianConverter()
         {
             return IsLittleEndian ? CopyConverter : SwapConverter;
         }
 
+        /// <summary>
+        /// Returns an Endian Converter which read/write big endian data.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static EndianConverter CreateBitEndianConverter()
         {
             return IsLittleEndian ? SwapConverter : CopyConverter;
         }
 
+        /// <summary>
+        /// Returns an Endian Converter which read/write native endian data.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static EndianConverter CreateNativeConverter()
         {
             return CopyConverter;
         }
 
-        //public static EndianConverter LittleEndian
-        //{
-        //    get
-        //    {
-        //        return IsLittleEndian
-        //    }
-        //}
-
         #endregion
 
         #region Reading from byte Arrays
 
         // floatingpoint
-        public abstract float ReadFloat(byte[] data, int index);
-        public abstract double ReadDouble(byte[] data, int index);
-        public abstract decimal ReadDecimal(byte[] data, int index);
+        /// <summary>
+        /// Reads a float from buffer at index.
+        /// </summary>
+        /// <param name="buffer">byte buffer</param>
+        /// <param name="index">index to read at.</param>
+        /// <returns></returns>
+        public abstract float ReadFloat(byte[] buffer, int index);
+        /// <summary>
+        /// Reads a double from buffer at index pos.
+        /// </summary>
+        /// <param name="buffer">byte buffer to read from.</param>
+        /// <param name="index">index to read at.</param>
+        /// <returns></returns>
+        public abstract double ReadDouble(byte[] buffer, int index);
+        /// <summary>
+        /// Reads a decimal from buffer at index position.
+        /// </summary>
+        /// <param name="buffer">byte buffer to read from.</param>
+        /// <param name="index">index position to read at.</param>
+        /// <returns></returns>
+        public abstract decimal ReadDecimal(byte[] buffer, int index);
 
-        // unsigned integer
-        //[CLSCompliant(false)]
-        public abstract UInt16 ReadUInt16(byte[] data, int index);
-        //[CLSCompliant(false)]
-        public abstract UInt32 ReadUInt32(byte[] data, int index);
-        //[CLSCompliant(false)]
-        public abstract UInt64 ReadUInt64(byte[] data, int index);
+        // unsigned integer        
+        /// <summary>
+        /// Reads an UInt16 from buffer at index position.
+        /// </summary>
+        /// <param name="buffer">byte buffer to read from.</param>
+        /// <param name="index">index position to read at.</param>
+        /// <returns></returns>
+        public abstract UInt16 ReadUInt16(byte[] buffer, int index);        
+        /// <summary>
+        /// Reads an UInt32 from buffer at index position.
+        /// </summary>
+        /// <param name="buffer">byte buffer to read from.</param>
+        /// <param name="index">index position to read at.</param>
+        /// <returns></returns>
+        public abstract UInt32 ReadUInt32(byte[] buffer, int index);        
+        /// <summary>
+        /// Reads an UInt64 from buffer at index position.
+        /// </summary>
+        /// <param name="buffer">byte buffer to read from.</param>
+        /// <param name="index">index position to read at.</param>
+        /// <returns></returns>
+        public abstract UInt64 ReadUInt64(byte[] buffer, int index);
 
         // signed integer
-        public abstract Int16 ReadInt16(byte[] data, int index);
-        public abstract Int32 ReadInt32(byte[] data, int index);
-        public abstract Int64 ReadInt64(byte[] data, int index);
+        /// <summary>
+        /// Reads an Int16 from buffer at index position.
+        /// </summary>
+        /// <param name="buffer">byte buffer to read from.</param>
+        /// <param name="index">index position to read at.</param>
+        /// <returns></returns>
+        public abstract Int16 ReadInt16(byte[] buffer, int index);
+        /// <summary>
+        /// Reads an Int32 from buffer at index position.
+        /// </summary>
+        /// <param name="buffer">byte buffer to read from.</param>
+        /// <param name="index">index position to read at.</param>
+        /// <returns></returns>
+        public abstract Int32 ReadInt32(byte[] buffer, int index);
+        /// <summary>
+        /// Reads an Int64 from buffer at index position.
+        /// </summary>
+        /// <param name="buffer">byte buffer to read from.</param>
+        /// <param name="index">index position to read at.</param>
+        /// <returns></returns>
+        public abstract Int64 ReadInt64(byte[] buffer, int index);
 
         #endregion
 
         #region Writing to byte Arrays
 
+        /// <summary>
+        /// Write a float to byte buffer at speficied index.
+        /// </summary>
+        /// <param name="dest">destination to write value to.</param>
+        /// <param name="index">index in buffer to write at.</param>
+        /// <param name="value">value to write.</param>
         public abstract void Write(byte[] dest, int index, float value);
+        /// <summary>
+        /// Write a double to byte buffer at speficied index.
+        /// </summary>
+        /// <param name="dest">destination to write value to.</param>
+        /// <param name="index">index in buffer to write at.</param>
+        /// <param name="value">value to write.</param>
         public abstract void Write(byte[] dest, int index, double value);
+        /// <summary>
+        /// Write a decimal to byte buffer at speficied index.
+        /// </summary>
+        /// <param name="dest">destination to write value to.</param>
+        /// <param name="index">index in buffer to write at.</param>
+        /// <param name="value">value to write.</param>
         public abstract void Write(byte[] dest, int index, decimal scalar);
 
         // unsigned integer
-        //[CLSCompliant(false)]
+        /// <summary>
+        /// Write an UInt16 to byte buffer at speficied index.
+        /// </summary>
+        /// <param name="dest">destination to write value to.</param>
+        /// <param name="index">index in buffer to write at.</param>
+        /// <param name="value">value to write.</param>
         public abstract void Write(byte[] dest, int index, UInt16 value);
-        //[CLSCompliant(false)]
+        /// <summary>
+        /// Write an UInt32 to byte buffer at speficied index.
+        /// </summary>
+        /// <param name="dest">destination to write value to.</param>
+        /// <param name="index">index in buffer to write at.</param>
+        /// <param name="value">value to write.</param>
         public abstract void Write(byte[] dest, int index, UInt32 value);
-        //[CLSCompliant(false)]
+        /// <summary>
+        /// Write an UInt64 to byte buffer at speficied index.
+        /// </summary>
+        /// <param name="dest">destination to write value to.</param>
+        /// <param name="index">index in buffer to write at.</param>
+        /// <param name="value">value to write.</param>
         public abstract void Write(byte[] dest, int index, UInt64 value);
 
         // signed integer
+        /// <summary>
+        /// Write an Int16 to byte buffer at speficied index.
+        /// </summary>
+        /// <param name="dest">destination to write value to.</param>
+        /// <param name="index">index in buffer to write at.</param>
+        /// <param name="value">value to write.</param>
         public abstract void Write(byte[] dest, int index, Int16 value);
+        /// <summary>
+        /// Write an Int32 to byte buffer at speficied index.
+        /// </summary>
+        /// <param name="dest">destination to write value to.</param>
+        /// <param name="index">index in buffer to write at.</param>
+        /// <param name="value">value to write.</param>
         public abstract void Write(byte[] dest, int index, Int32 value);
+        /// <summary>
+        /// Write an Int64 to byte buffer at speficied index.
+        /// </summary>
+        /// <param name="dest">destination to write value to.</param>
+        /// <param name="index">index in buffer to write at.</param>
+        /// <param name="value">value to write.</param>
         public abstract void Write(byte[] dest, int index, Int64 value);
 
         #endregion
