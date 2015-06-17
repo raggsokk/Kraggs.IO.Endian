@@ -69,7 +69,8 @@ namespace Kraggs.IO.Endian.PerformanceTests
 #if !DEBUG
             if (!System.Diagnostics.Debugger.IsAttached)
             {
-                var fname = @"D:\Temp\EndianPerformanceReport.txt";
+                var fname = Path.Combine(@"..\..\", "EndianPerformanceReport.txt");
+                //var fname = @"D:\Temp\EndianPerformanceReport.txt";
                 report.GenerateReport(new TextWriterReportVisitor(fname, true));                        
             }
 #endif

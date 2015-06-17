@@ -106,15 +106,15 @@ namespace Kraggs.IO.Endian.PerformanceTests
             WriteLine(ConsoleColor.Gray, "--------------------------------------------------------------------------");
             WriteLine(ConsoleColor.Gray, "  Operating System:               {0,40}", report.OSVersionString);
             WriteLine(ConsoleColor.Gray, "  CPUInfo:                        {0,40}", report.CPUInfo);
-            WriteLine(ConsoleColor.Gray, "  .net version:                   {0,40}", report.DotNetVersion);
+            WriteLine(ConsoleColor.Gray, "  .Net Version:                   {0,40}", report.DotNetVersion);
             WriteLine();
 
             WriteLine(ConsoleColor.White, "Assembly information");
             WriteLine(ConsoleColor.Gray, "--------------------------------------------------------------------------");
             WriteLine(ConsoleColor.Gray, "  Mono DataConverter Commit:      {0,40}",
                 report.MonoDataConverterCommit);
-            WriteLine(ConsoleColor.Gray, "  Mono DataConverter Validation Enabled:  {0,32}",
-                report.MonoDataConverterValidationEnabled);
+            WriteLine(ConsoleColor.Gray, "  Mono DataConverter Validation Disabled:  {0,31}",
+                report.MonoDataConverterValidationDisabled);
             WriteLine(ConsoleColor.Gray, "  Using Kraggs.IO.Endian Version: {0,40}",
                 report.KraggsVersion);
 
@@ -177,8 +177,10 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 pTestResultStringFormat = stringFormat;
 
             // write header and line
-            this.WriteLine(ConsoleColor.White, stringFormat, headerValues);
-            this.WriteLine(ConsoleColor.White, "-------------------------------------------------------");
+            var header = string.Format(stringFormat, headerValues);
+            this.WriteLine(ConsoleColor.White, header);
+            var line = new string('-', header.Length);
+            this.WriteLine(ConsoleColor.White, line);
 
             // write read result using string format
             foreach(var readResult in report.ReadResults)
@@ -214,8 +216,10 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 pTestResultStringFormat = stringFormat;
 
             // write header and line
-            this.WriteLine(ConsoleColor.White, stringFormat, headerValues);
-            this.WriteLine(ConsoleColor.White, "-------------------------------------------------------");
+            var header = string.Format(stringFormat, headerValues);
+            this.WriteLine(ConsoleColor.White, header);
+            var line = new string('-', header.Length);
+            this.WriteLine(ConsoleColor.White, line);
 
             // write read result using string format
             foreach (var writeResult in report.WriteResults)

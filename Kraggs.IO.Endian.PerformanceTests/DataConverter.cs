@@ -42,6 +42,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+#define MONO_DATACONVERTER_STATIC_METHODS
 using System;
 using System.Collections;
 using System.Text;
@@ -1427,12 +1428,14 @@ namespace Mono {
 		
 		static public unsafe ushort UInt16FromLE (byte [] data, int index)
 		{
+#if !PERFTEST_DISABLE_VALIDATION
 			if (data == null)
 				throw new ArgumentNullException ("data");
 			if (data.Length - index < 2)
 				throw new ArgumentException ("index");
 			if (index < 0)
 				throw new ArgumentException ("index");
+#endif
 			
 			ushort ret;
 			fixed (byte *src = &data[index]){
@@ -1555,12 +1558,14 @@ namespace Mono {
 		
 		static public unsafe ushort UInt16FromBE (byte [] data, int index)
 		{
+#if !PERFTEST_DISABLE_VALIDATION
 			if (data == null)
 				throw new ArgumentNullException ("data");
 			if (data.Length - index < 2)
 				throw new ArgumentException ("index");
 			if (index < 0)
 				throw new ArgumentException ("index");
+#endif
 			
 			ushort ret;
 			fixed (byte *src = &data[index]){
@@ -1683,12 +1688,14 @@ namespace Mono {
 		
 		static public unsafe ushort UInt16FromNative (byte [] data, int index)
 		{
+#if !PERFTEST_DISABLE_VALIDATION
 			if (data == null)
 				throw new ArgumentNullException ("data");
 			if (data.Length - index < 2)
 				throw new ArgumentException ("index");
 			if (index < 0)
 				throw new ArgumentException ("index");
+#endif
 			
 			ushort ret;
 			fixed (byte *src = &data[index]){

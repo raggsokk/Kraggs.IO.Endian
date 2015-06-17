@@ -39,7 +39,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
 
         // asm info
         public string MonoDataConverterCommit { get; protected set; }
-        public bool MonoDataConverterValidationEnabled { get; protected set; }
+        public bool MonoDataConverterValidationDisabled { get; protected set; }
         public Version KraggsVersion { get;protected set; }
         public bool DebugMode { get; protected set; }
 
@@ -84,9 +84,9 @@ namespace Kraggs.IO.Endian.PerformanceTests
             this.KraggsVersion = GetAssemblyVersionFromType(typeof(Kraggs.IO.EndianConverter));
             this.MonoDataConverterCommit = "c04f7e75bfbdf1e3f976193ab0bc0d034679e358";
 #if PERFTEST_DISABLE_VALIDATION
-            this.MonoDataConverterValidationEnabled = false;
+            this.MonoDataConverterValidationDisabled = true;
 #else
-            this.MonoDataConverterValidationEnabled = true;
+            this.MonoDataConverterValidationDisabled = false;
 #endif
 #if DEBUG
             this.DebugMode = true;

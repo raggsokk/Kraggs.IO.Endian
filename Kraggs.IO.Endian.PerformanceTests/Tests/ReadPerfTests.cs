@@ -43,6 +43,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
             var ElementCount = buffer.Length / ElementSize;
             var test1Buffer = new UInt16[ElementCount];
             var test2Buffer = new UInt16[ElementCount];
+            var test3Buffer = new UInt16[ElementCount];
 
             for (int i = 0; i < RunCount; i++)
             {
@@ -70,6 +71,15 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 result.AddResult("Kraggs", w.ElapsedMilliseconds);
 
                 // Add other Endian implementatins here!
+                bytePos = 0;
+                w.Restart();
+                for(int j = 0; j < ElementCount; j++)
+                {
+                    test3Buffer[j] = DataConverter.UInt16FromNative(buffer, bytePos);
+                    bytePos += ElementSize;
+                }
+                w.Stop();
+                result.AddResult("Mono2", w.ElapsedMilliseconds);
 
                 // validate results.
                 var errorCount = TestValidate.ValidateBuffers<UInt16>(test1Buffer, test2Buffer);
@@ -91,6 +101,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
             var ElementCount = buffer.Length / ElementSize;
             var test1Buffer = new UInt16[ElementCount];
             var test2Buffer = new UInt16[ElementCount];
+            var test3Buffer = new UInt16[ElementCount];
 
             for (int i = 0; i < RunCount; i++)
             {
@@ -118,6 +129,20 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 result.AddResult("Kraggs", w.ElapsedMilliseconds);
 
                 // Add other Endian implementatins here!
+                bytePos = 0;
+                w.Restart();
+                var flagLittleEndian = DataConverter.IsLittleEndian;
+                for (int j = 0; j < ElementCount; j++)
+                {
+                    if(flagLittleEndian)
+                        test3Buffer[j] = DataConverter.UInt16FromBE(buffer, bytePos);
+                    else
+                        test3Buffer[j] = DataConverter.UInt16FromLE(buffer, bytePos);
+                    bytePos += ElementSize;
+                }
+                w.Stop();
+                result.AddResult("MonoS", w.ElapsedMilliseconds);
+
 
                 // validate results.
                 var errorCount = TestValidate.ValidateBuffers<UInt16>(test1Buffer, test2Buffer);
