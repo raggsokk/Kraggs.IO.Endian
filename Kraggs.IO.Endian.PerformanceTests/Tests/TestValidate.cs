@@ -50,5 +50,16 @@ namespace Kraggs.IO.Endian.PerformanceTests
 
             return errorCount;
         }
+
+        /// <summary>
+        /// .Net 4.5 Compiler Magic.
+        /// </summary>
+        /// <param name="FuncName"></param>
+        /// <returns></returns>
+        internal static string GetCallingFunctionName(
+            [System.Runtime.CompilerServices.CallerMemberName] string FuncName = "")
+        {
+            return FuncName;
+        }
     }
 }
