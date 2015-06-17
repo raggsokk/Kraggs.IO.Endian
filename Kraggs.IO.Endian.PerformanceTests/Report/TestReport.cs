@@ -222,7 +222,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
             w.Restart();
             foreach(var writeTest in WriteTests)
             {
-                ReadResults.Add(writeTest(testBuffer, runCount));
+                WriteResults.Add(writeTest(testBuffer, runCount));
             }
             w.Stop();
             this.TimeWriteTests = w.ElapsedMilliseconds;

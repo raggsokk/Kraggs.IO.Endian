@@ -13,13 +13,19 @@ namespace Kraggs.IO.Endian.PerformanceTests
         static void Main(string[] args)
         {
             // 1. make report
+#if DEBUG
             var report = new TestReport(3, 20000);
+#else
+            var report = new TestReport(5, 2000000);
+#endif
 
             // 2. add read tests
-
+            report.AddReadTest(ReadPerfTests.CopyReadUInt16);
+            report.AddReadTest(ReadPerfTests.SwapReadUInt16);
 
             // 3. add write tests
-
+            report.AddWriteTest(WritePerfTests.CopyWriteUInt16);
+            report.AddWriteTest(WritePerfTests.SwapWriteUInt16);
 
             // 4. run tests
             report.RunTests();

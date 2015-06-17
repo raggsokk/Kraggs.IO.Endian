@@ -157,6 +157,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
             this.WriteLine();
             this.WriteLine();
             this.WriteLine(ConsoleColor.Green, "====  Reading Tests  =====");
+            this.WriteLine();
 
             if(report.ReadResults == null || report.ReadResults.Count == 0)
             {
