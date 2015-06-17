@@ -2,6 +2,9 @@
 // Authors:
 //   Miguel de Icaza (miguel@novell.com)
 //
+// Modified:
+//   Jarle Hansen - added compilation option PERFTEST_DISABLE_VALIDATION
+//
 // See the following url for documentation:
 //     http://www.mono-project.com/Mono_DataConvert
 //
@@ -11,6 +14,9 @@
 //
 //     MONO_DATACONVERTER_STATIC_METHODS:     
 //         Exposes the public static methods.
+//
+//     PERFTEST_DISABLE_VALIDATION:
+//         Removes input validation, meant to be used with perftests.
 //
 // TODO:
 //   Support for "DoubleWordsAreSwapped" for ARM devices
@@ -763,21 +769,25 @@ namespace Mono {
 
 		internal void Check (byte [] dest, int destIdx, int size)
 		{
+#if !PERFTEST_DISABLE_VALIDATION
 			if (dest == null)
 				throw new ArgumentNullException ("dest");
 			if (destIdx < 0 || destIdx > dest.Length - size)
 				throw new ArgumentException ("destIdx");
+#endif
 		}
 		
 		class CopyConverter : DataConverter {
 			public override double GetDouble (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 8)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 				double ret;
 				byte *b = (byte *)&ret;
 
@@ -789,12 +799,14 @@ namespace Mono {
 
 			public override ulong GetUInt64 (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 8)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				ulong ret;
 				byte *b = (byte *)&ret;
@@ -807,12 +819,14 @@ namespace Mono {
 
 			public override long GetInt64 (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 8)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				long ret;
 				byte *b = (byte *)&ret;
@@ -825,12 +839,14 @@ namespace Mono {
 			
 			public override float GetFloat  (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 4)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				float ret;
 				byte *b = (byte *)&ret;
@@ -843,12 +859,14 @@ namespace Mono {
 			
 			public override int GetInt32  (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 4)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				int ret;
 				byte *b = (byte *)&ret;
@@ -861,12 +879,14 @@ namespace Mono {
 			
 			public override uint GetUInt32 (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 4)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				uint ret;
 				byte *b = (byte *)&ret;
@@ -879,12 +899,14 @@ namespace Mono {
 			
 			public override short GetInt16 (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 2)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				short ret;
 				byte *b = (byte *)&ret;
@@ -897,12 +919,14 @@ namespace Mono {
 			
 			public override ushort GetUInt16 (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 2)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				ushort ret;
 				byte *b = (byte *)&ret;
@@ -997,12 +1021,14 @@ namespace Mono {
 		class SwapConverter : DataConverter {
 			public override double GetDouble (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 8)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				double ret;
 				byte *b = (byte *)&ret;
@@ -1015,12 +1041,14 @@ namespace Mono {
 
 			public override ulong GetUInt64 (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 8)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				ulong ret;
 				byte *b = (byte *)&ret;
@@ -1033,12 +1061,14 @@ namespace Mono {
 
 			public override long GetInt64 (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 8)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				long ret;
 				byte *b = (byte *)&ret;
@@ -1051,12 +1081,14 @@ namespace Mono {
 			
 			public override float GetFloat  (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 4)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				float ret;
 				byte *b = (byte *)&ret;
@@ -1069,12 +1101,14 @@ namespace Mono {
 			
 			public override int GetInt32  (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 4)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				int ret;
 				byte *b = (byte *)&ret;
@@ -1087,12 +1121,14 @@ namespace Mono {
 			
 			public override uint GetUInt32 (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 4)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				uint ret;
 				byte *b = (byte *)&ret;
@@ -1105,12 +1141,14 @@ namespace Mono {
 			
 			public override short GetInt16 (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 2)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				short ret;
 				byte *b = (byte *)&ret;
@@ -1123,12 +1161,14 @@ namespace Mono {
 			
 			public override ushort GetUInt16 (byte [] data, int index)
 			{
+#if !PERFTEST_DISABLE_VALIDATION
 				if (data == null)
 					throw new ArgumentNullException ("data");
 				if (data.Length - index < 2)
 					throw new ArgumentException ("index");
 				if (index < 0)
 					throw new ArgumentException ("index");
+#endif
 
 				ushort ret;
 				byte *b = (byte *)&ret;
