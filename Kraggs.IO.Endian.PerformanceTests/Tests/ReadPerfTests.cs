@@ -35,7 +35,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult CopyReadUInt16(byte[] buffer, int RunCount)
         {            
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -71,18 +71,9 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 result.AddResult("Kraggs", w.ElapsedMilliseconds);
 
                 // Add other Endian implementatins here!
-                bytePos = 0;
-                w.Restart();
-                for(int j = 0; j < ElementCount; j++)
-                {
-                    test3Buffer[j] = DataConverter.UInt16FromNative(buffer, bytePos);
-                    bytePos += ElementSize;
-                }
-                w.Stop();
-                result.AddResult("Mono2", w.ElapsedMilliseconds);
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<UInt16>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<UInt16>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -93,7 +84,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult SwapReadUInt16(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -129,23 +120,9 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 result.AddResult("Kraggs", w.ElapsedMilliseconds);
 
                 // Add other Endian implementatins here!
-                bytePos = 0;
-                w.Restart();
-                var flagLittleEndian = DataConverter.IsLittleEndian;
-                for (int j = 0; j < ElementCount; j++)
-                {
-                    if(flagLittleEndian)
-                        test3Buffer[j] = DataConverter.UInt16FromBE(buffer, bytePos);
-                    else
-                        test3Buffer[j] = DataConverter.UInt16FromLE(buffer, bytePos);
-                    bytePos += ElementSize;
-                }
-                w.Stop();
-                result.AddResult("MonoS", w.ElapsedMilliseconds);
-
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<UInt16>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<UInt16>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -156,7 +133,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult CopyReadUInt32(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -193,7 +170,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<UInt32>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<UInt32>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -204,7 +181,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult SwapReadUInt32(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -241,7 +218,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<UInt32>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<UInt32>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -253,7 +230,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult CopyReadUInt64(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -290,7 +267,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<UInt64>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<UInt64>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -301,7 +278,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult SwapReadUInt64(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -338,7 +315,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<UInt64>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<UInt64>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -354,7 +331,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult CopyReadInt16(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -391,7 +368,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<Int16>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<Int16>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -402,7 +379,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult SwapReadInt16(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -439,7 +416,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<Int16>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<Int16>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -450,7 +427,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult CopyReadInt32(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -487,7 +464,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<Int32>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<Int32>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -498,7 +475,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult SwapReadInt32(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -535,7 +512,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<Int32>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<Int32>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -547,7 +524,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult CopyReadInt64(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -584,7 +561,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<Int64>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<Int64>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -595,7 +572,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult SwapReadInt64(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -632,7 +609,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<Int64>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<Int64>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -648,7 +625,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult CopyReadFloat(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -685,7 +662,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<float>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<float>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -696,7 +673,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult SwapReadFloat(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -733,7 +710,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<float>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<float>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -744,7 +721,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult CopyReadDouble(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -781,7 +758,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<double>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<double>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }
@@ -792,7 +769,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public static TestResult SwapReadDouble(byte[] buffer, int RunCount)
         {
             //var funcName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            var funcName = TestValidate.GetCallingFunctionName();
+            var funcName = PerfMiscUtils.GetCallingFunctionName();
             var result = new TestResult(funcName);
             var w = new Stopwatch();
 
@@ -829,7 +806,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 // Add other Endian implementatins here!
 
                 // validate results.
-                var errorCount = TestValidate.ValidateBuffers<double>(test1Buffer, test2Buffer);
+                var errorCount = PerfMiscUtils.ValidateBuffers<double>(test1Buffer, test2Buffer);
                 if (errorCount > 0)
                     result.AddErrors(errorCount);
             }

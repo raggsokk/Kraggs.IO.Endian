@@ -10,6 +10,8 @@ using System.Runtime.InteropServices;
 
 using Microsoft.Win32;
 
+using Mono;
+
 namespace Kraggs.IO.Endian.PerformanceTests
 {
     /// <summary>
@@ -36,11 +38,13 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public string OSVersionString { get; protected set; }
         public string CPUInfo { get; protected set; }
         public Version DotNetVersion { get; protected set; }
+        public string DotNetRuntimeInfo { get; protected set; }
 
         // asm info
         public string MonoDataConverterCommit { get; protected set; }
         public bool MonoDataConverterValidationDisabled { get; protected set; }
         public Version KraggsVersion { get;protected set; }
+        public Version KraggsPerfVersion { get; protected set; }
         public bool DebugMode { get; protected set; }
 
         // run settings
@@ -73,119 +77,24 @@ namespace Kraggs.IO.Endian.PerformanceTests
             ReadResults = new List<TestResult>();
             WriteResults = new List<TestResult>();
 
-
-
             // this is technically part of warmup
 
             // 1. First get host indipendent info
+            //this.OSVersionString = Environment.OSVersion.VersionString;
+            this.OSVersionString = PerfMiscUtils.GetHostInfo();
+            this.CPUInfo = PerfMiscUtils.GetCPuInfo();
             this.DotNetVersion = Environment.Version;
-            this.OSVersionString = Environment.OSVersion.VersionString;
+            this.DotNetRuntimeInfo = PerfMiscUtils.GetMonoRuntimeInfo();
 
-            this.KraggsVersion = GetAssemblyVersionFromType(typeof(Kraggs.IO.EndianConverter));
-            this.MonoDataConverterCommit = "c04f7e75bfbdf1e3f976193ab0bc0d034679e358";
-#if PERFTEST_DISABLE_VALIDATION
-            this.MonoDataConverterValidationDisabled = true;
-#else
-            this.MonoDataConverterValidationDisabled = false;
-#endif
-#if DEBUG
-            this.DebugMode = true;
-#else
-            this.DebugMode = false;
-#endif
+            this.MonoDataConverterCommit = DataConverter.GitCommitHash;
+            this.MonoDataConverterValidationDisabled = DataConverter.BuildValidationDisabled;
+            this.KraggsVersion = PerfMiscUtils.GetAssemblyVersionFromType(typeof(Kraggs.IO.EndianConverter));
+            this.KraggsPerfVersion = PerfMiscUtils.GetAssemblyVersionFromType(this.GetType());
 
-            // set default cpuinfo result.
-            this.CPUInfo = string.Format("Code for getting cpu info on '{0}' is not implemented.", Environment.OSVersion.Platform);
-            // 2. get host dependent info
-            if (Environment.OSVersion.Platform == PlatformID.MacOSX)
-            {
-                // do macox specific header info getting.
-            }
-            else if (Environment.OSVersion.Platform == PlatformID.Unix)
-            {
-                // do unix/linux specific header info getting.
-            }
-            else if (Environment.OSVersion.Platform == PlatformID.Xbox)
-            {
-                // do xbox specific header info getting.
-            }                
-            else
-            {
-                // windows.
-                this.CPUInfo = GetCPUInfoFromRegistry();
-            }
 
+            this.DebugMode = PerfMiscUtils.IsDebugMode;
+            
         }
-
-        #region Util Functions
-
-        protected virtual string GetCPUInfoFromRegistry()
-        {
-            const string DEFAULT_ERROR = "Failed to get prosessor info.";
-
-            try
-            {
-                using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
-                {
-                    using (var cpu0 = hklm.OpenSubKey("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", false))
-                    {
-                        return cpu0.GetValue("ProcessorNameString", DEFAULT_ERROR) as string;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return DEFAULT_ERROR;
-            }
-        }
-
-        protected virtual Version GetAssemblyVersionFromType(Type type)
-        {
-            // try hack version first.
-
-            try
-            {
-                var fullname = type.Assembly.FullName;
-                if (!string.IsNullOrWhiteSpace(fullname))
-                {
-                    var posVersion = fullname.IndexOf("Version=");
-
-                    if (posVersion > 0)
-                    {
-                        posVersion += 8;
-                        var len = fullname.IndexOf(",", posVersion);
-
-                        var ver = fullname.Substring(posVersion, len - posVersion);
-
-                        return new Version(ver);
-                    }
-                }
-            }
-            catch(Exception)
-            { }
-
-            // then try get filevesrion attribute.
-
-            var attribs = type.Assembly.GetCustomAttributes(false);
-
-            foreach(var o in attribs)
-            {
-                var otype = o.GetType();
-               
-                if(otype == typeof(System.Reflection.AssemblyFileVersionAttribute))
-                {
-                    var asmFileVer = o as System.Reflection.AssemblyFileVersionAttribute;
-
-                    return new Version(asmFileVer.Version);
-                }
-            }
-
-            Debug.Assert(false);
-            throw new NotImplementedException("TODO: Detect why we got here! (GetAssemblyVersionFromType)"); 
-        }
-
-
-        #endregion
 
         #region Public interface
 

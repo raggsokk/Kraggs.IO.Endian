@@ -21,11 +21,15 @@ namespace Kraggs.IO.Endian.PerformanceTests
         public const int RUNCOUNTMAX = 10;
         public const int RUNCOUNTDEFAULT = 3;
 
-        [Option('c', "count", // DefaultValue=RUNCOUNTDEFAULT, 
+        [Option('c', "count", 
+            DefaultValue=RUNCOUNTDEFAULT, 
+            //Required = true,
             HelpText="Number of times tests are run.")]
         public int RunCount { get; set; }
 
-        [Option('s', "size", //DefaultValue = BYTEARRAYDEFAULT, 
+        [Option('s', "size", 
+            DefaultValue = BYTEARRAYDEFAULT, 
+            //Required = true,
             HelpText="Size of byte array to run test at")]
         public int ByteArraySize { get; set; }
 
@@ -34,6 +38,12 @@ namespace Kraggs.IO.Endian.PerformanceTests
 
         [Option("SkipWriteTests", HelpText = "Skip running write tests.")]
         public bool SkipWriteTests { get; set; }
+
+        [Option("version", HelpText = "Prints versions and exits.")]
+        public bool PrintVersion { get; set; }
+
+        //[Option("Debug", HelpText = "Enables Special Debug Run")]
+        //public int Debug { get; set; }
 
         // reports
 

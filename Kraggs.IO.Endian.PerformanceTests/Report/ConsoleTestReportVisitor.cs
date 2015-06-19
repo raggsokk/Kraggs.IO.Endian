@@ -104,9 +104,10 @@ namespace Kraggs.IO.Endian.PerformanceTests
 
             WriteLine(ConsoleColor.White, "Host Testing information");
             WriteLine(ConsoleColor.Gray, "--------------------------------------------------------------------------");
-            WriteLine(ConsoleColor.Gray, "  Operating System:               {0,40}", report.OSVersionString);
-            WriteLine(ConsoleColor.Gray, "  CPUInfo:                        {0,40}", report.CPUInfo);
-            WriteLine(ConsoleColor.Gray, "  .Net Version:                   {0,40}", report.DotNetVersion);
+            WriteLine(ConsoleColor.Gray, "  Operating System:     {0,50}", report.OSVersionString);
+            WriteLine(ConsoleColor.Gray, "  CPUInfo:              {0,50}", report.CPUInfo);
+            WriteLine(ConsoleColor.Gray, "  .Net Version:         {0,50}", report.DotNetVersion);
+            WriteLine(ConsoleColor.Gray, "  .Net Runtime Info:    {0,50}", report.DotNetRuntimeInfo);
             WriteLine();
 
             WriteLine(ConsoleColor.White, "Assembly information");
@@ -117,6 +118,8 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 report.MonoDataConverterValidationDisabled);
             WriteLine(ConsoleColor.Gray, "  Using Kraggs.IO.Endian Version: {0,40}",
                 report.KraggsVersion);
+            WriteLine(ConsoleColor.Gray, "  Using Kraggs.IO.Endian.PerformanceTests Version: {0,23}",
+                report.KraggsPerfVersion);
 
             WriteLine();
 

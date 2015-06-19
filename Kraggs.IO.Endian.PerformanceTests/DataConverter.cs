@@ -42,7 +42,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-#define MONO_DATACONVERTER_STATIC_METHODS
+//#define MONO_DATACONVERTER_STATIC_METHODS // This code fails on Mono!
 using System;
 using System.Collections;
 using System.Text;
@@ -64,6 +64,20 @@ namespace Mono {
 		static readonly DataConverter CopyConv = new CopyConverter ();
 
 		public static readonly bool IsLittleEndian = BitConverter.IsLittleEndian;
+        /// <summary>
+        /// This is the hash of the DataConverter Commit we are using and have modified.
+        /// </summary>
+        public static readonly string GitCommitHash = "c04f7e75bfbdf1e3f976193ab0bc0d034679e358";
+        /// <summary>
+        /// This DataConverter is buildt with PERFTEST_DISABLE_VALIDATION.
+        /// That means validation in its function is removed at compile time.
+        /// </summary>
+        public static readonly bool BuildValidationDisabled =
+#if PERFTEST_DISABLE_VALIDATION
+            true;
+#else
+            false;
+#endif
 			
 		public abstract double GetDouble (byte [] data, int index);
 		public abstract float  GetFloat  (byte [] data, int index);
