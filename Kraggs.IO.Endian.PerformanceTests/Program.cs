@@ -44,6 +44,90 @@ namespace Kraggs.IO.Endian.PerformanceTests
 
                 report = new TestReport(opt.RunCount, opt.ByteArraySize);
 
+                // since 'MutuallyExclusiveSet' seems to not work
+                // we do it another way.
+                // first add all tests
+                // TODO: maybe use reflection to add much of this in one go?
+                report.AddReadTest(ReadPerfTests.CopyReadUInt16);
+                report.AddReadTest(ReadPerfTests.SwapReadUInt16);
+                report.AddReadTest(ReadPerfTests.CopyReadUInt32);
+                report.AddReadTest(ReadPerfTests.SwapReadUInt32);
+                report.AddReadTest(ReadPerfTests.CopyReadUInt64);
+                report.AddReadTest(ReadPerfTests.SwapReadUInt64);
+
+                report.AddReadTest(ReadPerfTests.CopyReadInt16);
+                report.AddReadTest(ReadPerfTests.SwapReadInt16);
+                report.AddReadTest(ReadPerfTests.CopyReadInt32);
+                report.AddReadTest(ReadPerfTests.SwapReadInt32);
+                report.AddReadTest(ReadPerfTests.CopyReadInt64);
+                report.AddReadTest(ReadPerfTests.SwapReadInt64);
+
+                report.AddReadTest(ReadPerfTests.CopyReadFloat);
+                report.AddReadTest(ReadPerfTests.SwapReadFloat);
+                report.AddReadTest(ReadPerfTests.CopyReadDouble);
+                report.AddReadTest(ReadPerfTests.SwapReadDouble);
+
+                report.AddWriteTest(WritePerfTests.CopyWriteUInt16);
+                report.AddWriteTest(WritePerfTests.SwapWriteUInt16);
+                report.AddWriteTest(WritePerfTests.CopyWriteUInt32);
+                report.AddWriteTest(WritePerfTests.SwapWriteUInt32);
+                report.AddWriteTest(WritePerfTests.CopyWriteUInt64);
+                report.AddWriteTest(WritePerfTests.SwapWriteUInt64);
+
+                report.AddWriteTest(WritePerfTests.CopyWriteInt16);
+                report.AddWriteTest(WritePerfTests.SwapWriteInt16);
+                report.AddWriteTest(WritePerfTests.CopyWriteInt32);
+                report.AddWriteTest(WritePerfTests.SwapWriteInt32);
+                report.AddWriteTest(WritePerfTests.CopyWriteInt64);
+                report.AddWriteTest(WritePerfTests.SwapWriteInt64);
+
+                report.AddWriteTest(WritePerfTests.CopyWriteFloat);
+                report.AddWriteTest(WritePerfTests.SwapWriteFloat);
+                report.AddWriteTest(WritePerfTests.CopyWriteDouble);
+                report.AddWriteTest(WritePerfTests.SwapWriteDouble);
+
+                if (opt.SkipReadTests)
+                {
+                    report.ReadTests.Clear();
+                }
+
+                if(opt.SkipWriteTests)
+                {
+                    report.WriteTests.Clear();
+                }
+
+                // TODO: this is rather ugly code, but it should work.
+                // TODO: change ReadTests to dictionary with funcname from reflection?
+                if(!string.IsNullOrWhiteSpace(opt.Tests))
+                {
+                    //TODO: Handle tests not fount.
+
+                    var tests = opt.Tests.Split(new char[] { ',' });
+                    var stest = new SortedSet<string>();
+                    foreach(var t in tests)
+                        stest.Add(t.ToLowerInvariant());
+                    
+                    var readtests = new List<delRunTest>();
+
+                    foreach(var r in report.ReadTests)
+                        if(stest.Contains(r.Method.Name.ToLowerInvariant()))
+                            readtests.Add(r);
+
+                    report.ReadTests.Clear();
+                    foreach (var r in readtests)
+                        report.AddReadTest(r);
+
+                    var writetest = new List<delRunTest>();
+
+                    foreach (var w in report.WriteTests)
+                        if (stest.Contains(w.Method.Name.ToLowerInvariant()))
+                            writetest.Add(w);
+
+                    report.WriteTests.Clear();
+                    foreach (var w in writetest)
+                        report.AddWriteTest(w);
+                }
+
                 //if(opt.Debug != 0)
                 //{
                 //    if(opt.Debug == 1)
@@ -54,49 +138,6 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 //    Environment.Exit(0);
                 //}
 
-                if (!opt.SkipReadTests)
-                {
-                    report.AddReadTest(ReadPerfTests.CopyReadUInt16);
-                    report.AddReadTest(ReadPerfTests.SwapReadUInt16);
-                    report.AddReadTest(ReadPerfTests.CopyReadUInt32);
-                    report.AddReadTest(ReadPerfTests.SwapReadUInt32);
-                    report.AddReadTest(ReadPerfTests.CopyReadUInt64);
-                    report.AddReadTest(ReadPerfTests.SwapReadUInt64);
-
-                    report.AddReadTest(ReadPerfTests.CopyReadInt16);
-                    report.AddReadTest(ReadPerfTests.SwapReadInt16);
-                    report.AddReadTest(ReadPerfTests.CopyReadInt32);
-                    report.AddReadTest(ReadPerfTests.SwapReadInt32);
-                    report.AddReadTest(ReadPerfTests.CopyReadInt64);
-                    report.AddReadTest(ReadPerfTests.SwapReadInt64);
-
-                    report.AddReadTest(ReadPerfTests.CopyReadFloat);
-                    report.AddReadTest(ReadPerfTests.SwapReadFloat);
-                    report.AddReadTest(ReadPerfTests.CopyReadDouble);
-                    report.AddReadTest(ReadPerfTests.SwapReadDouble);
-                }
-
-                if(!opt.SkipWriteTests)
-                {
-                    report.AddWriteTest(WritePerfTests.CopyWriteUInt16);
-                    report.AddWriteTest(WritePerfTests.SwapWriteUInt16);
-                    report.AddWriteTest(WritePerfTests.CopyWriteUInt32);
-                    report.AddWriteTest(WritePerfTests.SwapWriteUInt32);
-                    report.AddWriteTest(WritePerfTests.CopyWriteUInt64);
-                    report.AddWriteTest(WritePerfTests.SwapWriteUInt64);
-
-                    report.AddWriteTest(WritePerfTests.CopyWriteInt16);
-                    report.AddWriteTest(WritePerfTests.SwapWriteInt16);
-                    report.AddWriteTest(WritePerfTests.CopyWriteInt32);
-                    report.AddWriteTest(WritePerfTests.SwapWriteInt32);
-                    report.AddWriteTest(WritePerfTests.CopyWriteInt64);
-                    report.AddWriteTest(WritePerfTests.SwapWriteInt64);
-
-                    report.AddWriteTest(WritePerfTests.CopyWriteFloat);
-                    report.AddWriteTest(WritePerfTests.SwapWriteFloat);
-                    report.AddWriteTest(WritePerfTests.CopyWriteDouble);
-                    report.AddWriteTest(WritePerfTests.SwapWriteDouble);
-                }
 
                 report.RunTests();
 

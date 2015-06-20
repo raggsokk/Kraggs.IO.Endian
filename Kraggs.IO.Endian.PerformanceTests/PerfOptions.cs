@@ -33,25 +33,30 @@ namespace Kraggs.IO.Endian.PerformanceTests
             HelpText="Size of byte array to run test at")]
         public int ByteArraySize { get; set; }
 
-        [Option("SkipReadTests", HelpText = "Skip running read tests.")]
+        // tests
+        [Option("SkipReadTests", HelpText = "Skip running read tests.", MutuallyExclusiveSet = "skiptest")]
         public bool SkipReadTests { get; set; }
 
-        [Option("SkipWriteTests", HelpText = "Skip running write tests.")]
+        [Option("SkipWriteTests", HelpText = "Skip running write tests.", MutuallyExclusiveSet = "skiptest")]
         public bool SkipWriteTests { get; set; }
 
-        [Option("version", HelpText = "Prints versions and exits.")]
-        public bool PrintVersion { get; set; }
-
-        //[Option("Debug", HelpText = "Enables Special Debug Run")]
-        //public int Debug { get; set; }
+        [Option('t', "tests", HelpText = "list of specific tests to run, comma seperated.", MutuallyExclusiveSet = "specifictests")]
+        public string Tests { get; set; }
 
         // reports
-
         [Option('q', "quiet", HelpText="Dont print report results to console.")]
         public bool Quiet { get; set; }
 
         [Option("txtreport", HelpText = "Output a txt report to this filename")]
         public string TextReportFilename { get; set; }
+
+
+        // other
+        [Option("version", HelpText = "Prints versions and exits.")]
+        public bool PrintVersion { get; set; }
+
+        //[Option("Debug", HelpText = "Enables Special Debug Run")]
+        //public int Debug { get; set; }
 
         [HelpOption('h', "help")]
         public string GetHelp()
@@ -69,6 +74,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
             return help;
         }
 
+        // validation.
         public bool ValidateOptions()
         {
             bool flagError = false;
@@ -96,6 +102,25 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 }
             }
 
+            if(!string.IsNullOrWhiteSpace(this.Tests))
+            {
+                if(this.SkipReadTests)
+                {
+                    Console.WriteLine("Error: 'SkipReadTests' are mutually exclusive with 'tests'");
+                    flagError = true;
+                }
+
+                if(this.SkipWriteTests)
+                {
+                    Console.WriteLine("Error: 'SkipWriteTests' are mutually exclusive with 'tests'");
+                    flagError = true;
+                }
+
+                //validate that testinput is confirment if possible.
+
+            }
+
+            // this way all errors are printed instead of the first one.
             if(flagError)
             {
                 Console.WriteLine("Maybe try '--help' for more information?");
