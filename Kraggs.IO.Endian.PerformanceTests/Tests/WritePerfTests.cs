@@ -53,6 +53,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
             // create test buffers to write test data to.
             var test1Buffer = new byte[buffer.Length];
             var test2Buffer = new byte[buffer.Length];
+            //var test3Buffer = new byte[buffer.Length];
 
             for (int i = 0; i < RunCount; i++)
             {
@@ -79,6 +80,15 @@ namespace Kraggs.IO.Endian.PerformanceTests
                 result.AddResult("Kraggs", w.ElapsedMilliseconds);
 
                 // Add additionally Endian Converters here!
+                //bytePos = 0;
+                //w.Restart();
+                //for (int j = 0; j < ElementCount; j++)
+                //{
+                //    KraggsNative.WriteU(test3Buffer, bytePos, origBuffer[j]);
+                //    bytePos += ElementSize;
+                //}
+                //w.Stop();
+                //result.AddResult("KraggU", w.ElapsedMilliseconds);
 
                 // Validate
                 var errorCount = PerfMiscUtils.ValidateBuffers(test1Buffer, test2Buffer);
@@ -308,7 +318,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                     bytePos += ElementSize;
                 }
                 w.Stop();
-                result.AddResult("Kraggs", w.ElapsedMilliseconds);
+                result.AddResult("KraggU", w.ElapsedMilliseconds);
 
                 // Add additionally Endian Converters here!
 
@@ -661,7 +671,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
                     bytePos += ElementSize;
                 }
                 w.Stop();
-                result.AddResult("Kraggs", w.ElapsedMilliseconds);
+                result.AddResult("KraggU", w.ElapsedMilliseconds);
 
                 // Add additionally Endian Converters here!
 
@@ -759,6 +769,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
             // create test buffers to write test data to.
             var test1Buffer = new byte[buffer.Length];
             var test2Buffer = new byte[buffer.Length];
+            //var test3Buffer = new byte[buffer.Length];
 
             for (int i = 0; i < RunCount; i++)
             {
@@ -782,9 +793,18 @@ namespace Kraggs.IO.Endian.PerformanceTests
                     bytePos += ElementSize;
                 }
                 w.Stop();
-                result.AddResult("Kraggs", w.ElapsedMilliseconds);
+                result.AddResult("KraggU", w.ElapsedMilliseconds);
 
                 // Add additionally Endian Converters here!
+                //bytePos = 0;
+                //w.Restart();
+                //for (int j = 0; j < ElementCount; j++)
+                //{
+                //    KraggsNative.WriteU(test3Buffer, bytePos, origBuffer[j]);
+                //    bytePos += ElementSize;
+                //}
+                //w.Stop();
+                //result.AddResult("KraggU", w.ElapsedMilliseconds);
 
                 // Validate
                 var errorCount = PerfMiscUtils.ValidateBuffers(test1Buffer, test2Buffer);
@@ -875,6 +895,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
             // create test buffers to write test data to.
             var test1Buffer = new byte[buffer.Length];
             var test2Buffer = new byte[buffer.Length];
+            //var test3Buffer = new byte[buffer.Length];
 
             for (int i = 0; i < RunCount; i++)
             {
@@ -898,9 +919,18 @@ namespace Kraggs.IO.Endian.PerformanceTests
                     bytePos += ElementSize;
                 }
                 w.Stop();
-                result.AddResult("Kraggs", w.ElapsedMilliseconds);
+                result.AddResult("KraggU", w.ElapsedMilliseconds);
 
                 // Add additionally Endian Converters here!
+                //bytePos = 0;
+                //w.Restart();
+                //for (int j = 0; j < ElementCount; j++)
+                //{
+                //    KraggsNative.WriteU(test3Buffer, bytePos, origBuffer[j]);
+                //    bytePos += ElementSize;
+                //}
+                //w.Stop();
+                //result.AddResult("KraggU", w.ElapsedMilliseconds);
 
                 // Validate
                 var errorCount = PerfMiscUtils.ValidateBuffers(test1Buffer, test2Buffer);

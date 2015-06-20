@@ -55,6 +55,18 @@ namespace Kraggs.IO
 
         #region UInt16
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // this proably dont work thou.
+        public unsafe static void PutBytesCopyU(byte[] buffer, int index, UInt16 value)
+        {
+            //Check (dest, destIdx, 2);
+            fixed(byte* target = &buffer[index])
+            {
+                ushort* source = (ushort*)&value;
+
+                *((ushort*)target) = *source;
+            }
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesCopy(byte[] buffer, int index, UInt16 value)
         {
@@ -74,6 +86,18 @@ namespace Kraggs.IO
         #endregion
 
         #region UInt32
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // this proably dont work thou.
+        public unsafe static void PutBytesCopyU(byte[] buffer, int index, UInt32 value)
+        {
+            //Check (dest, destIdx, 2);
+            fixed (byte* target = &buffer[index])
+            {
+                uint* source = (uint*)&value;
+
+                *((uint*)target) = *source;
+            }
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesCopy(byte[] buffer, int index, UInt32 value)
@@ -104,30 +128,29 @@ namespace Kraggs.IO
 
         #region UInt64
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //public static void PutBytesCopy(byte[] buffer, int index, UInt64 value)
-        //{
-        //    // Dont think this any faster.
-        //    //Native.PutBytes(buffer, index, value);
-
-        //    UInt32 low = (UInt32)(value & 0XFFFFFFFF);
-        //    UInt32 high = (UInt32)((value >> 32));
-        //    //UInt32 high = (UInt32)((value >> 32) & 0XFFFF);
-        //    PutBytesCopy(buffer, index, low);
-        //    PutBytesCopy(buffer, index + 4, high);
-        //}
-        public unsafe static void PutBytesCopy(byte[] buffer, int index, UInt64 value)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // this proably dont work thou.
+        public unsafe static void PutBytesCopyU(byte[] buffer, int index, UInt64 value)
         {
-            if (buffer == null)
-                throw new ArgumentNullException("buffer");
-            if (index < 0 || index > buffer.Length - sizeof(UInt64))
-                throw new ArgumentException("Index out of bounds", "index");
+            //if (buffer == null)
+            //    throw new ArgumentNullException("buffer");
+            //if (index < 0 || index > buffer.Length - sizeof(UInt64))
+            //    throw new ArgumentException("Index out of bounds", "index");
 
             fixed (byte* ptr = &buffer[index])
             {
                 UInt64* source = (UInt64*)&value;
                 *((UInt64*)ptr) = *source;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void PutBytesCopy(byte[] buffer, int index, UInt64 value)
+        {
+            UInt32 low = (UInt32)(value & 0XFFFFFFFF);
+            UInt32 high = (UInt32)((value >> 32));
+            //UInt32 high = (UInt32)((value >> 32) & 0XFFFF);
+            PutBytesCopy(buffer, index, low);
+            PutBytesCopy(buffer, index + 4, high);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -145,32 +168,18 @@ namespace Kraggs.IO
 
         #region Float
 
-        //public unsafe static void PutBytesCopy(byte[] buffer, int index, float value)
-        //{
-        //    if (buffer == null)
-        //        throw new ArgumentNullException("buffer");
-        //    if (index < 0 || index > buffer.Length - sizeof(float))
-        //        throw new ArgumentException("Index out of bounds", "index");
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // unsafe is not inlined thou.
+        public unsafe static void PutBytesCopyU(byte[] buffer, int index, float value)
+        {
+            //Check (dest, destIdx, 2);
 
-        //    fixed (byte* ptr = &buffer[index])
-        //    {
-        //        float* source = (float*)&value;
-        //        *((float*)ptr) = *source;
-        //    }
-        //}
+            fixed (byte* target = &buffer[index])
+            {
+                uint* source = (uint*)&value;
 
-        //public static void PutBytesSwap(byte[] buffer, int index, float value)
-        //{
-        //    if (buffer == null)
-        //        throw new ArgumentNullException("buffer");
-        //    if (index < 0 || index > buffer.Length - sizeof(float))
-        //        throw new ArgumentException("Index out of bounds", "index");
-
-        //    fixed (byte* ptr = &buffer[index])
-        //    {
-
-        //    }
-        //}
+                *((uint*)target) = *source;
+            }   
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesCopy(byte[] buffer, int index, float value)
@@ -181,6 +190,18 @@ namespace Kraggs.IO
             };
             PutBytesCopy(buffer, index, s.UInt32);
             //Native.PutBytes(buffer, index, value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // unsafe is not inlined thou.
+        public unsafe static void PutBytesSwapU(byte[] buffer, int index, float value)
+        {
+            uint source = *(uint*)&value;
+            buffer[index] = (byte)((source >> 24));
+            buffer[index + 1] = (byte)((source >> 16) & 0xFF);
+            buffer[index + 2] = (byte)((source >> 8) & 0xFF);
+            buffer[index + 3] = (byte)(source & 0xFF);
+
+            //PutBytesSwap(buffer, index, *source);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -198,12 +219,47 @@ namespace Kraggs.IO
 
         #region Double
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // unsafe is not inlined thou.
+        public unsafe static void PutBytesCopyU(byte[] buffer, int index, double value)
+        {
+            //Check (dest, destIdx, 2);
+
+            fixed (byte* target = &buffer[index])
+            {
+                ulong* source = (ulong*)&value;
+
+                *((ulong*)target) = *source;
+            }
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesCopy(byte[] buffer, int index, double value)
         {
             //Native.PutBytes(buffer, index, value);
             var d = BitConverter.DoubleToInt64Bits(value);
             PutBytesCopy(buffer, index, d);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // unsafe is not inlined thou.
+        public unsafe static void PutBytesSwapU(byte[] buffer, int index, double value)
+        {
+            ulong source = *(ulong*)&value;
+
+            uint low = (uint)(source & 0XFFFFFFFF);
+            uint high = (uint)((source >> 32));
+
+            buffer[index] = (byte)((high >> 24) & 0xFF);
+            buffer[index + 1] = (byte)((high >> 16) & 0xFF);
+            buffer[index + 2] = (byte)((high >> 8) & 0xFF);
+            buffer[index + 3] = (byte)(high & 0xFF);
+            buffer[index + 4] = (byte)((low >> 24) & 0xFF);
+            buffer[index + 5] = (byte)((low >> 16) & 0xFF);
+            buffer[index + 6] = (byte)((low >> 8) & 0xFF);
+            buffer[index + 7] = (byte)(low & 0xFF);
+            
+            //var d = BitConverter.DoubleToInt64Bits(value);
+            //PutBytesSwap(buffer, index, d);
+            //Swap.PutBytes(buffer, index, value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -217,6 +273,18 @@ namespace Kraggs.IO
         #endregion
 
         #region Int16
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // unsafe is not inlined thou.
+        public unsafe static void PutBytesCopyU(byte[] buffer, int index, Int16 value)
+        {
+            //Check (dest, destIdx, 2);
+            fixed (byte* target = &buffer[index])
+            {
+                ushort* source = (ushort*)&value;
+
+                *((ushort*)target) = *source;
+            }
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesCopy(byte[] buffer, int index, Int16 value)
@@ -237,6 +305,18 @@ namespace Kraggs.IO
         #endregion
 
         #region Int32
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // unsafe is not inlined thou.
+        public unsafe static void PutBytesCopyU(byte[] buffer, int index, Int32 value)
+        {
+            //Check (dest, destIdx, 2);
+            fixed (byte* target = &buffer[index])
+            {
+                uint* source = (uint*)&value;
+
+                *((uint*)target) = *source;
+            }
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PutBytesCopy(byte[] buffer, int index, Int32 value)
@@ -266,23 +346,27 @@ namespace Kraggs.IO
 
         #region Int64
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //public static void PutBytesCopy(byte[] buffer, int index, Int64 value)
-        //{
-        //    Native.PutBytes(buffer, index, value);
-        //}
-        public unsafe static void PutBytesCopy(byte[] buffer, int index, Int64 value)
+        public unsafe static void PutBytesCopyU(byte[] buffer, int index, Int64 value)
         {
-            if (buffer == null)
-                throw new ArgumentNullException("buffer");
-            if (index < 0 || index > buffer.Length - sizeof(Int64))
-                throw new ArgumentException("Index out of bounds", "index");
-
+            //if (buffer == null)
+            //    throw new ArgumentNullException("buffer");
+            //if (index < 0 || index > buffer.Length - sizeof(Int64))
+            //    throw new ArgumentException("Index out of bounds", "index");
             fixed (byte* ptr = &buffer[index])
             {
-                Int64* source = (Int64*)&value;
-                *((Int64*)ptr) = *source;
+                ulong* source = (ulong*)&value;
+                *((ulong*)ptr) = *source;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void PutBytesCopy(byte[] buffer, int index, Int64 value)
+        {
+            UInt32 low = (UInt32)(value & 0XFFFFFFFF);
+            UInt32 high = (UInt32)((value >> 32));
+            //UInt32 high = (UInt32)((value >> 32) & 0XFFFF);
+            PutBytesCopy(buffer, index, low);
+            PutBytesCopy(buffer, index + 4, high);            
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

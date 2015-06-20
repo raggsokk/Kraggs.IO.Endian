@@ -122,6 +122,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
             w.Restart();
             foreach(var readTest in ReadTests)
             {
+                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
                 ReadResults.Add(readTest(testBuffer, runCount));
             }
             w.Stop();
@@ -131,6 +132,7 @@ namespace Kraggs.IO.Endian.PerformanceTests
             w.Restart();
             foreach(var writeTest in WriteTests)
             {
+                GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
                 WriteResults.Add(writeTest(testBuffer, runCount));
             }
             w.Stop();

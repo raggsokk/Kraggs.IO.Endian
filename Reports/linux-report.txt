@@ -1,0 +1,105 @@
+Host Testing information
+--------------------------------------------------------------------------
+  Operating System:                                 3.19.5-200.fc21.x86_64
+  CPUInfo:                        Intel(R) Core(TM) i7-3930K CPU @ 3.20GHz
+  .Net Version:                                            4.0.30319.17020
+  .Net Runtime Info:         3.12.1 (tarball Fri Mar 13 20:09:39 UTC 2015)
+
+Assembly information
+--------------------------------------------------------------------------
+  Mono DataConverter Commit:      c04f7e75bfbdf1e3f976193ab0bc0d034679e358
+  Mono DataConverter Validation Disabled:                             True
+  Using Kraggs.IO.Endian Version:                           0.5.5649.39395
+  Using Kraggs.IO.Endian.PerformanceTests Version:          1.0.5649.39395
+
+Running in release mode...
+
+Running test 5 times with test bufer size of 20000000 bytes.
+
+
+====  Reading Tests  =====
+
+Test                Impl     Run1  Run2  Run3  Run4  Run5       AVG
+-------------------------------------------------------------------
+CopyReadUInt16      Kraggs     55    45    45    45    45        47
+CopyReadUInt16      Mono       99    89    89    89    89        91
+SwapReadUInt16      Kraggs     50    39    39    39    39      41.2
+SwapReadUInt16      Mono       96    87    87    87    87      88.8
+CopyReadUInt32      Kraggs     36    26    26    26    26        28
+CopyReadUInt32      Mono       58    51    49    50    49      51.4
+SwapReadUInt32      Kraggs     37    27    27    27    27        29
+SwapReadUInt32      Mono       61    53    51    52    53        54
+CopyReadUInt64      Kraggs     31    21    22    21    21      23.2
+CopyReadUInt64      Mono       43    33    33    33    34      35.2
+SwapReadUInt64      Kraggs     32    22    22    22    22        24
+SwapReadUInt64      Mono       45    36    36    36    36      37.8
+CopyReadInt16       Kraggs     51    40    40    40    40      42.2
+CopyReadInt16       Mono       95    86    86    86    86      87.8
+SwapReadInt16       Kraggs     50    40    40    40    40        42
+SwapReadInt16       Mono       96    89    87    87    87      89.2
+CopyReadInt32       Kraggs     36    26    27    27    27      28.6
+CopyReadInt32       Mono       59    50    49    50    50      51.6
+SwapReadInt32       Kraggs     37    27    27    27    27        29
+SwapReadInt32       Mono       63    54    54    54    54      55.8
+CopyReadInt64       Kraggs     32    22    22    22    25      24.6
+CopyReadInt64       Mono       43    34    34    34    34      35.8
+SwapReadInt64       Kraggs     32    22    22    22    22        24
+SwapReadInt64       Mono       45    35    36    36    36      37.6
+CopyReadFloat       Kraggs     49    39    39    39    39        41
+CopyReadFloat       Mono       77    68    67    66    69      69.4
+SwapReadFloat       Kraggs     49    39    39    39    39        41
+SwapReadFloat       Mono       80    68    67    66    67      69.6
+CopyReadDouble      Kraggs     33    22    22    22    23      24.4
+CopyReadDouble      Mono       44    34    34    34    33      35.8
+SwapReadDouble      Kraggs     32    22    22    22    22        24
+SwapReadDouble      Mono       45    34    35    34    36      36.8
+
+
+====  Writing Tests  =====
+
+Test                Impl     Run1  Run2  Run3  Run4  Run5       AVG
+-------------------------------------------------------------------
+CopyWriteUInt16     Kraggs     51    41    41    41    41        43
+CopyWriteUInt16     Mono       49    39    39    39    39        41
+SwapWriteUInt16     Kraggs     66    61    61    60    60      61.6
+SwapWriteUInt16     Mono       64    54    54    54    55      56.2
+CopyWriteUInt32     Kraggs     27    17    17    18    17      19.2
+CopyWriteUInt32     Mono       26    16    16    17    16      18.2
+SwapWriteUInt32     Kraggs     39    29    29    29    29        31
+SwapWriteUInt32     Mono       44    34    34    34    34        36
+CopyWriteUInt64     KraggU     19     9     9     9     9        11
+CopyWriteUInt64     Mono       18     8     8     8     8        10
+SwapWriteUInt64     Kraggs     33    23    23    23    23        25
+SwapWriteUInt64     Mono       36    26    26    26    26        28
+CopyWriteInt16      Kraggs     47    37    36    36    36      38.4
+CopyWriteInt16      Mono       48    38    38    38    38        40
+SwapWriteInt16      Kraggs     60    51    50    52    50      52.6
+SwapWriteInt16      Mono       63    53    53    53    53        55
+CopyWriteInt32      Kraggs     29    20    20    19    19      21.4
+CopyWriteInt32      Mono       29    19    19    19    19        21
+SwapWriteInt32      Kraggs     40    29    30    30    30      31.8
+SwapWriteInt32      Mono       45    35    34    35    35      36.8
+CopyWriteInt64      KraggU     18     9     9     9     9      10.8
+CopyWriteInt64      Mono       18     8     8     8     8        10
+SwapWriteInt64      Kraggs     33    23    23    23    23        25
+SwapWriteInt64      Mono       36    26    26    26    26        28
+CopyWriteFloat      KraggU     30    20    20    20    20        22
+CopyWriteFloat      Mono       31    21    21    21    21        23
+SwapWriteFloat      Kraggs     45    35    35    35    36      37.2
+SwapWriteFloat      Mono       46    36    36    36    36        38
+CopyWriteDouble     KraggU     20    10    10    10    10        12
+CopyWriteDouble     Mono       20    10    10    10    10        12
+SwapWriteDouble     Kraggs     34    24    24    24    24        26
+SwapWriteDouble     Mono       36    26    26    26    26        28
+
+Testing Statistics
+--------------------------------------------------------------------------
+Number of read tests:                                                   16
+Number of write tests:                                                  16
+Total number of tests:                                                  32
+Total time of warm up:                                               79 ms
+Total time of read tests:                                         11275 ms
+Total time of write tests:                                        13775 ms
+Total test time including warmup:                                 25129 ms
+Time used to generate this rapport:                                   9 ms
+

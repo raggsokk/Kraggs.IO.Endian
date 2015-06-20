@@ -268,6 +268,38 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
+        public void SingleCopyU()
+        {
+            // first a simple value test.
+            Single val = 16384;
+            var test1Buffer = new byte[sizeof(Single)];
+            var test2Buffer = new byte[test1Buffer.Length];
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "16384 failed.");
+
+            // maxvalue
+            val = Single.MaxValue;
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MaxValue failed.");
+
+            // maxvalue
+            val = Single.MinValue;
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MinValue failed.");
+
+        }
+
+
+        [Test]
         public void SingleSwap()
         {
             // first a simple value test.
@@ -291,6 +323,37 @@ namespace Kraggs.IO.Endian.Tests
             // maxvalue
             val = Single.MinValue;
             WriteEndian.PutBytesSwap(test1Buffer, 0, val);
+            Swap.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MinValue failed.");
+
+        }
+
+        [Test]
+        public void SingleSwapU()
+        {
+            // first a simple value test.
+            Single val = 16384;
+            var test1Buffer = new byte[sizeof(Single)];
+            var test2Buffer = new byte[test1Buffer.Length];
+            WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+            Swap.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "16384 failed.");
+
+            // maxvalue
+            val = Single.MaxValue;
+            WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+            Swap.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MaxValue failed.");
+
+            // maxvalue
+            val = Single.MinValue;
+            WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
             Swap.PutBytes(test2Buffer, 0, val);
 
             Assert.True(AreEqual(test1Buffer, test2Buffer),
@@ -330,6 +393,37 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
+        public void DoubleCopyU()
+        {
+            // first a simple value test.
+            Double val = 16384;
+            var test1Buffer = new byte[sizeof(Double)];
+            var test2Buffer = new byte[test1Buffer.Length];
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "16384 failed.");
+
+            // maxvalue
+            val = Double.MaxValue;
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MaxValue failed.");
+
+            // maxvalue
+            val = Double.MinValue;
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MinValue failed.");
+
+        }
+
+        [Test]
         public void DoubleSwap()
         {
             // first a simple value test.
@@ -357,8 +451,39 @@ namespace Kraggs.IO.Endian.Tests
 
             Assert.True(AreEqual(test1Buffer, test2Buffer),
                 "MinValue failed.");
+        }
+
+        [Test]
+        public void DoubleSwapU()
+        {
+            // first a simple value test.
+            Double val = 16384;
+            var test1Buffer = new byte[sizeof(Double)];
+            var test2Buffer = new byte[test1Buffer.Length];
+            WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+            Swap.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "16384 failed.");
+
+            // maxvalue
+            val = Double.MaxValue;
+            WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+            Swap.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MaxValue failed.");
+
+            // maxvalue
+            val = Double.MinValue;
+            WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+            Swap.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MinValue failed.");
 
         }
+
 
         #endregion
 
@@ -396,6 +521,38 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
+        public void Int16CopyU()
+        {
+            // first a simple value test.
+            Int16 val = 16384;
+            var test1Buffer = new byte[sizeof(Int16)];
+            var test2Buffer = new byte[test1Buffer.Length];
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "16384 failed.");
+
+            // maxvalue
+            val = Int16.MaxValue;
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MaxValue failed.");
+
+            // maxvalue
+            val = Int16.MinValue;
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MinValue failed.");
+
+        }
+
+
+        [Test]
         public void Int16Swap()
         {
             // first a simple value test.
@@ -425,6 +582,36 @@ namespace Kraggs.IO.Endian.Tests
                 "MinValue failed.");
 
         }
+
+        //[Test]
+        //public void Int16SwapU()
+        //{
+        //    // first a simple value test.
+        //    Int16 val = 16384;
+        //    var test1Buffer = new byte[sizeof(Int16)];
+        //    var test2Buffer = new byte[test1Buffer.Length];
+        //    WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+        //    Swap.PutBytes(test2Buffer, 0, val);
+
+        //    Assert.True(AreEqual(test1Buffer, test2Buffer),
+        //        "16384 failed.");
+
+        //    // maxvalue
+        //    val = Int16.MaxValue;
+        //    WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+        //    Swap.PutBytes(test2Buffer, 0, val);
+
+        //    Assert.True(AreEqual(test1Buffer, test2Buffer),
+        //        "MaxValue failed.");
+
+        //    // maxvalue
+        //    val = Int16.MinValue;
+        //    WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+        //    Swap.PutBytes(test2Buffer, 0, val);
+
+        //    Assert.True(AreEqual(test1Buffer, test2Buffer),
+        //        "MinValue failed.");
+        //}
 
         [Test]
         public void Int32Copy()
@@ -458,6 +645,38 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
+        public void Int32CopyU()
+        {
+            // first a simple value test.
+            Int32 val = 16384;
+            var test1Buffer = new byte[sizeof(Int32)];
+            var test2Buffer = new byte[test1Buffer.Length];
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "16384 failed.");
+
+            // maxvalue
+            val = Int32.MaxValue;
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MaxValue failed.");
+
+            // maxvalue
+            val = Int32.MinValue;
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MinValue failed.");
+
+        }
+
+
+        [Test]
         public void Int32Swap()
         {
             // first a simple value test.
@@ -487,6 +706,37 @@ namespace Kraggs.IO.Endian.Tests
                 "MinValue failed.");
 
         }
+
+        //[Test]
+        //public void Int32SwapU()
+        //{
+        //    // first a simple value test.
+        //    Int32 val = 16384;
+        //    var test1Buffer = new byte[sizeof(Int32)];
+        //    var test2Buffer = new byte[test1Buffer.Length];
+        //    WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+        //    Swap.PutBytes(test2Buffer, 0, val);
+
+        //    Assert.True(AreEqual(test1Buffer, test2Buffer),
+        //        "16384 failed.");
+
+        //    // maxvalue
+        //    val = Int32.MaxValue;
+        //    WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+        //    Swap.PutBytes(test2Buffer, 0, val);
+
+        //    Assert.True(AreEqual(test1Buffer, test2Buffer),
+        //        "MaxValue failed.");
+
+        //    // maxvalue
+        //    val = Int32.MinValue;
+        //    WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+        //    Swap.PutBytes(test2Buffer, 0, val);
+
+        //    Assert.True(AreEqual(test1Buffer, test2Buffer),
+        //        "MinValue failed.");
+
+        //}
 
         [Test]
         public void Int64Copy()
@@ -520,6 +770,38 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
+        public void Int64CopyU()
+        {
+            // first a simple value test.
+            Int64 val = 16384;
+            var test1Buffer = new byte[sizeof(Int64)];
+            var test2Buffer = new byte[test1Buffer.Length];
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "16384 failed.");
+
+            // maxvalue
+            val = Int64.MaxValue;
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MaxValue failed.");
+
+            // maxvalue
+            val = Int64.MinValue;
+            WriteEndian.PutBytesCopyU(test1Buffer, 0, val);
+            Native.PutBytes(test2Buffer, 0, val);
+
+            Assert.True(AreEqual(test1Buffer, test2Buffer),
+                "MinValue failed.");
+
+        }
+
+
+        [Test]
         public void Int64Swap()
         {
             // first a simple value test.
@@ -549,6 +831,37 @@ namespace Kraggs.IO.Endian.Tests
                 "MinValue failed.");
 
         }
+
+        //[Test]
+        //public void Int64SwapU()
+        //{
+        //    // first a simple value test.
+        //    Int64 val = 16384;
+        //    var test1Buffer = new byte[sizeof(Int64)];
+        //    var test2Buffer = new byte[test1Buffer.Length];
+        //    WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+        //    Swap.PutBytes(test2Buffer, 0, val);
+
+        //    Assert.True(AreEqual(test1Buffer, test2Buffer),
+        //        "16384 failed.");
+
+        //    // maxvalue
+        //    val = Int64.MaxValue;
+        //    WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+        //    Swap.PutBytes(test2Buffer, 0, val);
+
+        //    Assert.True(AreEqual(test1Buffer, test2Buffer),
+        //        "MaxValue failed.");
+
+        //    // maxvalue
+        //    val = Int64.MinValue;
+        //    WriteEndian.PutBytesSwapU(test1Buffer, 0, val);
+        //    Swap.PutBytes(test2Buffer, 0, val);
+
+        //    Assert.True(AreEqual(test1Buffer, test2Buffer),
+        //        "MinValue failed.");
+
+        //}
 
 
         #endregion

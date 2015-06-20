@@ -26,6 +26,8 @@
 //
 #endregion
 
+//#define MANUAL_INLINE_UNSAFE
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,6 +98,38 @@ namespace Kraggs.IO
 
         #region Writing to byte Arrays
 
+#if MANUAL_INLINE_UNSAFE
+
+        public unsafe override void Write(byte[] dest, int index, float value)
+        {
+            uint source = *(uint*)&value;
+
+            dest[index + 3] = (byte)(source & 0xFF);
+            dest[index + 2] = (byte)((source >> 8) & 0xFF);
+            dest[index + 1] = (byte)((source >> 16) & 0xFF);
+            dest[index] = (byte)((source >> 24) & 0xFF);
+        }
+
+
+        public unsafe override void Write(byte[] dest, int index, double value)
+        {
+            ulong source = *(ulong*)&value;
+
+            uint low = (uint)(source & 0XFFFFFFFF);
+            uint high = (uint)((source >> 32));
+
+            dest[index] = (byte)((high >> 24) & 0xFF);
+            dest[index + 1] = (byte)((high >> 16) & 0xFF);
+            dest[index + 2] = (byte)((high >> 8) & 0xFF);
+            dest[index + 3] = (byte)(high & 0xFF);
+            dest[index + 4] = (byte)((low >> 24) & 0xFF);
+            dest[index + 5] = (byte)((low >> 16) & 0xFF);
+            dest[index + 6] = (byte)((low >> 8) & 0xFF);
+            dest[index + 7] = (byte)(low & 0xFF);
+        }
+
+
+#else
         public override void Write(byte[] dest, int index, float value)
         {
             WriteEndian.PutBytesSwap(dest, index, value);
@@ -105,6 +139,8 @@ namespace Kraggs.IO
         {
             WriteEndian.PutBytesSwap(dest, index, value);
         }
+
+#endif
 
         public override void Write(byte[] dest, int index, decimal scalar)
         {
@@ -143,5 +179,8 @@ namespace Kraggs.IO
         }
 
         #endregion
+
+        // performance testing only
+
     }
 }

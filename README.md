@@ -9,16 +9,19 @@ which is portable and designed against .Net 4.5. Also all the conversion functio
 based on performance tests in order to find the most optimal implementation. Functionality which
 are currently skipped/missing for now are the Perl Pack/Unpack functions and the text functions.
 The speed improvements are mainly accomplished by avoiding using unsafe code, and heavy use of
-[Aggressive Inlining](https://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.methodimploptions(v=vs.110).aspx). 
+[Aggressive Inlining](https://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.methodimploptions(v=vs.110).aspx) 
 
 The code is validated against Mono.DataConvert with nUnit tests, but for now is mostly tested
 on Little Endian machines since I currently don't have access to a Big Endian Machine.
+
+The code has been performance tested on both [Mac](https://github.com/raggsokk/Kraggs.IO.Endian/blob/master/Reports/mac-report.txt), [Linux](https://github.com/raggsokk/Kraggs.IO.Endian/blob/master/Reports/linux-report.txt) and (Windows)[https://github.com/raggsokk/Kraggs.IO.Endian/blob/master/Reports/win-report.txt] 
+in order the most optimal code path.
 
 ## TODO	
 	* ~~Add EndianWriter code.~~
 	* ~~Add EndianConverter code for non stream testing.~~
 	* ~~Add end user performance test for EndianConverter.~~
-	* Recheck EndianReader/Writer based on performance results.
+	* ~~Recheck EndianReader/Writer based on performance results.~~
 	* Add Array Conversion functions.
 	* Add Async Array Conversion to EndianReader/Writer.
 	* Add Text reading/writing.

@@ -51,7 +51,7 @@ namespace Kraggs.IO.Endian.Tests
         #region Floatingpoint Tests
 
         [Test]
-        public void ConvertSwapReadFloat()
+        public void ConvertCopyReadFloat()
         {
             var testBytes = BitConverter.GetBytes(243.385f);
             Assert.AreEqual(
@@ -76,7 +76,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapWriteFloat()
+        public void ConvertCopyWriteFloat()
         {
             float val = 243.385f;
             var test1Buffer = new byte[sizeof(float)];
@@ -104,7 +104,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapReadDouble()
+        public void ConvertCopyReadDouble()
         {
             var testBytes = BitConverter.GetBytes(243.385d);
             Assert.AreEqual(
@@ -129,7 +129,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapWriteDouble()
+        public void ConvertCopyWriteDouble()
         {
             double val = 243.385d;
             var test1Buffer = new byte[sizeof(double)];
@@ -158,7 +158,7 @@ namespace Kraggs.IO.Endian.Tests
 
 
         [Test]
-        public void ConvertSwapReadDecimal()
+        public void ConvertCopyReadDecimal()
         {
             Assert.Ignore("Decimal not implemented yet.");
 
@@ -185,7 +185,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapWriteDecimal()
+        public void ConvertCopyWriteDecimal()
         {
             Assert.Ignore("Decimal not implemented yet.");
 
@@ -219,7 +219,7 @@ namespace Kraggs.IO.Endian.Tests
         #region unsigned integers
 
         [Test]
-        public void ConvertSwapReadUInt16()
+        public void ConvertCopyReadUInt16()
         {
             //Assert.Ignore("Decimal not implemented yet.");
 
@@ -246,7 +246,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapWriteUInt16()
+        public void ConvertCopyWriteUInt16()
         {
             UInt16 val = (UInt16)29347;
             var test1Buffer = new byte[sizeof(UInt16)];
@@ -274,7 +274,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapReadUInt32()
+        public void ConvertCopyReadUInt32()
         {
             //Assert.Ignore("Decimal not implemented yet.");
 
@@ -301,7 +301,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapWriteUInt32()
+        public void ConvertCopyWriteUInt32()
         {
             UInt32 val = (UInt32)29343437;
             var test1Buffer = new byte[sizeof(UInt32)];
@@ -329,7 +329,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapReadUInt64()
+        public void ConvertCopyReadUInt64()
         {
             //Assert.Ignore("Decimal not implemented yet.");
 
@@ -356,7 +356,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapWriteUInt64()
+        public void ConvertCopyWriteUInt64()
         {
             UInt64 val = (UInt64)29343437345;
             var test1Buffer = new byte[sizeof(UInt64)];
@@ -388,7 +388,7 @@ namespace Kraggs.IO.Endian.Tests
         #region signed integers
 
         [Test]
-        public void ConvertSwapReadInt16()
+        public void ConvertCopyReadInt16()
         {
             //Assert.Ignore("Decimal not implemented yet.");
 
@@ -415,7 +415,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapWriteInt16()
+        public void ConvertCopyWriteInt16()
         {
             Int16 val = (Int16)29347;
             var test1Buffer = new byte[sizeof(Int16)];
@@ -444,7 +444,7 @@ namespace Kraggs.IO.Endian.Tests
 
 
         [Test]
-        public void ConvertSwapReadInt32()
+        public void ConvertCopyReadInt32()
         {
             //Assert.Ignore("Decimal not implemented yet.");
 
@@ -471,7 +471,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapWriteInt32()
+        public void ConvertCopyWriteInt32()
         {
             Int32 val = (Int32)29343437;
             var test1Buffer = new byte[sizeof(Int32)];
@@ -499,7 +499,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapReadInt64()
+        public void ConvertCopyReadInt64()
         {
             //Assert.Ignore("Decimal not implemented yet.");
 
@@ -526,7 +526,7 @@ namespace Kraggs.IO.Endian.Tests
         }
 
         [Test]
-        public void ConvertSwapWriteInt64()
+        public void ConvertCopyWriteInt64()
         {
             Int64 val = (Int64)29343437345;
             var test1Buffer = new byte[sizeof(Int64)];

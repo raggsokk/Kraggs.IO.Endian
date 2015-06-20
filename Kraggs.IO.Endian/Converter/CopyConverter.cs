@@ -26,6 +26,8 @@
 //
 #endregion
 
+// #define MANUAL_INLINE_UNSAFE
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,20 +98,101 @@ namespace Kraggs.IO
 
         #region Writing to byte Arrays
 
+#if MANUAL_INLINE_UNSAFE
+
+        public unsafe override void Write(byte[] dest, int index, float value)
+        {
+            fixed (byte* target = &dest[index])
+            {
+                uint* source = (uint*)&value;
+
+                *((uint*)target) = *source;
+            }
+        }
+
+        public unsafe override void Write(byte[] dest, int index, double value)
+        {
+            fixed (byte* target = &dest[index])
+            {
+                ulong* source = (ulong*)&value;
+
+                *((ulong*)target) = *source;
+            }
+        }
+
+        public unsafe override void Write(byte[] dest, int index, ushort value)
+        {
+            fixed (byte* target = &dest[index])
+            {
+                ushort* source = (ushort*)&value;
+
+                *((ushort*)target) = *source;
+            }
+        }
+
+        public unsafe override void Write(byte[] dest, int index, uint value)
+        {
+            fixed (byte* target = &dest[index])
+            {
+                uint* source = (uint*)&value;
+
+                *((uint*)target) = *source;
+            }
+        }
+
+        public unsafe override void Write(byte[] dest, int index, ulong value)
+        {
+            fixed (byte* target = &dest[index])
+            {
+                ulong* source = (ulong*)&value;
+
+                *((ulong*)target) = *source;
+            }
+        }
+
+        public unsafe override void Write(byte[] dest, int index, short value)
+        {
+            fixed (byte* target = &dest[index])
+            {
+                ushort* source = (ushort*)&value;
+
+                *((ushort*)target) = *source;
+            }
+        }
+
+        public unsafe override void Write(byte[] dest, int index, int value)
+        {
+            fixed (byte* target = &dest[index])
+            {
+                uint* source = (uint*)&value;
+
+                *((uint*)target) = *source;
+            }
+        }
+
+        public unsafe override void Write(byte[] dest, int index, long value)
+        {
+            fixed (byte* target = &dest[index])
+            {
+                ulong* source = (ulong*)&value;
+
+                *((ulong*)target) = *source;
+            }
+        }
+
+#else
+
+
         public override void Write(byte[] dest, int index, float value)
         {
-            WriteEndian.PutBytesCopy(dest, index, value);
+            //WriteEndian.PutBytesCopy(dest, index, value);
+            WriteEndian.PutBytesCopyU(dest, index, value);
         }
 
         public override void Write(byte[] dest, int index, double value)
         {
-            WriteEndian.PutBytesCopy(dest, index, value);
-        }
-
-        public override void Write(byte[] dest, int index, decimal scalar)
-        {
             //WriteEndian.PutBytesCopy(dest, index, value);
-            throw new NotImplementedException();
+            WriteEndian.PutBytesCopyU(dest, index, value);
         }
 
         public override void Write(byte[] dest, int index, ushort value)
@@ -142,6 +225,16 @@ namespace Kraggs.IO
             WriteEndian.PutBytesCopy(dest, index, value);
         }
 
+#endif
+
+        public override void Write(byte[] dest, int index, decimal scalar)
+        {
+            //WriteEndian.PutBytesCopy(dest, index, value);
+            throw new NotImplementedException();
+        }
+
         #endregion
+
+        // performance testing only
     }
 }
